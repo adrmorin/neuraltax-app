@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NeuralTax AI</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .sidebar-nav a.active,
+        .sidebar-nav a:hover {
+            background: rgba(74, 222, 128, 0.1);
+            color: var(--accent-green-bright);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo" style="margin-bottom: 3rem;">Neuraltax</div>
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="#" class="active">Dashboard</a></li>
+                    <li><a href="#">Agent</a></li>
+                    <li><a href="#">Documents</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header style="background: transparent; padding: 0; margin-bottom: 2rem; position: static;">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <h2>Dashboard</h2>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <input type="text" placeholder="Search..."
+                            style="padding: 0.5rem 1rem; border-radius: 50px; border: 1px solid #ddd; outline: none;">
+                        <img src="nerea_avatar.png" style="width: 40px; height: 40px; border-radius: 50%;" alt="User">
+                    </div>
+                </div>
+            </header>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                <div class="stat-card">
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Saved Amount</div>
+                    <div style="font-size: 1.5rem; font-weight: 700;">$365</div>
+                </div>
+                <div class="stat-card">
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Spent Amount</div>
+                    <div style="font-size: 1.5rem; font-weight: 700;">$1.38K</div>
+                </div>
+                <div class="stat-card">
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Active Returns</div>
+                    <div style="font-size: 1.5rem; font-weight: 700;">377</div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+                <div class="card" style="background: white;">
+                    <h3>Recent Activity</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Alex Johnson</td>
+                                <td>$250.00</td>
+                                <td><span class="status-badge status-success">Success</span></td>
+                                <td>2 hrs ago</td>
+                            </tr>
+                            <tr>
+                                <td>Maria Garcia</td>
+                                <td>$1,200.00</td>
+                                <td><span class="status-badge status-success">Success</span></td>
+                                <td>5 hrs ago</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card" style="background: white;">
+                    <h3>AI Insights</h3>
+                    <div style="margin-top: 1.5rem; text-align: center;">
+                        <div
+                            style="width: 120px; height: 120px; border-radius: 50%; border: 8px solid var(--accent-green-bright); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <span style="font-size: 1.5rem; font-weight: 700;">78%</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Your tax efficiency has increased by
+                            12% this month.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Chat Widget Trigger -->
+    <div class="chat-widget">
+        <div class="chat-trigger" id="chatTrigger">
+            <img src="nerea_avatar.png" alt="Nerea">
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
