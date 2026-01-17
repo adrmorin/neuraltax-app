@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuralTax Blog - AI & Finance</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .blog-header {
+            background: var(--bg-dark-deep);
+            padding: 4rem 0;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .featured-post {
+            background: var(--bg-dark-card);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .featured-post img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .featured-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+        }
+
+        .post-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .post-card img {
+            width: 200px;
+            object-fit: cover;
+        }
+
+        .post-content {
+            padding: 1.5rem 1.5rem 1.5rem 0;
+            flex: 1;
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 0.75rem 0;
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+        }
+
+        .category-list li:last-child {
+            border-bottom: none;
+        }
+
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .tag:hover {
+            background: var(--accent-green-bright);
+            color: var(--bg-dark-deep);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <span style="font-size: 1.8rem;">N</span>euraltax
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#" style="color: var(--text-light);">Blog</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="dashboard.html" class="btn btn-primary">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="blog-header">
+        <div class="container">
+            <h1 style="margin-bottom: 1rem;">Neuraltax Blog</h1>
+            <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Latest insights on AI, Tax Law,
+                and Financial Intelligence. Stay ahead of the curve with our expert analysis.</p>
+        </div>
+    </div>
+
+    <main class="container" style="padding-bottom: 4rem;">
+
+        <div class="featured-post">
+            <img src="ai_brain.png" alt="AI in Tax Law">
+            <div class="featured-content">
+                <span class="status-badge"
+                    style="background: var(--accent-green-bright); color: var(--bg-dark-deep); margin-bottom: 1rem; display: inline-block;">Featured</span>
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">AI in Tax Law: What You Need to Know for 2026</h2>
+                <p style="color: #ddd; margin-bottom: 1.5rem; max-width: 800px;">Discover how artificial intelligence is
+                    reshaping the landscape of tax filing, ensuring higher accuracy and maximizing deductions for
+                    individuals and businesses alike.</p>
+                <a href="#" class="btn btn-primary">Read Article</a>
+            </div>
+        </div>
+
+        <div class="blog-grid">
+            <div class="posts-column">
+                <h3
+                    style="margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent-green-bright); display: inline-block; padding-bottom: 0.5rem;">
+                    Recent Posts</h3>
+
+                <div class="post-card">
+                    <img src="https://via.placeholder.com/200x150/1C2C3C/9DD3AF?text=Tax+2026" alt="Tax Updates">
+                    <div class="post-content">
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Tax Law • 2
+                            hours ago</div>
+                        <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem;">2026 Tax Adjustments: Standard Deduction
+                            Increases</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">The IRS has
+                            announced new inflation adjustments for the 2026 tax year. Here's what it means for your
+                            wallet.</p>
+                        <a href="#" style="color: var(--secondary-sage); font-weight: 600; text-decoration: none;">Read
+                            More →</a>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <img src="https://via.placeholder.com/200x150/1C2C3C/9DD3AF?text=Small+Biz" alt="Small Business">
+                    <div class="post-content">
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Business •
+                            5 hours ago</div>
+                        <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Small Business Accounting with AI</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Automating your
+                            bookkeeping can save you 20+ hours a month. Learn how Neuraltax Agent integrates with your
+                            workflow.</p>
+                        <a href="#" style="color: var(--secondary-sage); font-weight: 600; text-decoration: none;">Read
+                            More →</a>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <img src="https://via.placeholder.com/200x150/1C2C3C/9DD3AF?text=Crypto" alt="Crypto Taxes">
+                    <div class="post-content">
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Crypto • 1
+                            day ago</div>
+                        <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Navigating Crypto Taxes in the New Era
+                        </h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Understanding
+                            the new reporting requirements for digital assets and how to avoid common pitfalls.</p>
+                        <a href="#" style="color: var(--secondary-sage); font-weight: 600; text-decoration: none;">Read
+                            More →</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <aside class="sidebar-column">
+                <div class="card" style="background: white; margin-bottom: 2rem;">
+                    <h4 style="margin-bottom: 1rem;">Search Blog</h4>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" placeholder="Search..."
+                            style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                        <button
+                            style="background: var(--accent-green-bright); border: none; padding: 0.5rem; border-radius: 4px; cursor: pointer;">🔍</button>
+                    </div>
+                </div>
+
+                <div class="card" style="background: white; margin-bottom: 2rem;">
+                    <h4 style="margin-bottom: 1rem;">Categories</h4>
+                    <ul class="category-list">
+                        <li><span>AI & Tech</span> <span>(12)</span></li>
+                        <li><span>Tax Law</span> <span>(8)</span></li>
+                        <li><span>Accounting</span> <span>(5)</span></li>
+                        <li><span>Business Tips</span> <span>(15)</span></li>
+                        <li><span>Crypto</span> <span>(4)</span></li>
+                    </ul>
+                </div>
+
+                <div class="card" style="background: white;">
+                    <h4 style="margin-bottom: 1rem;">Popular Tags</h4>
+                    <div class="tag-cloud">
+                        <a href="#" class="tag">#taxes2026</a>
+                        <a href="#" class="tag">#AI</a>
+                        <a href="#" class="tag">#finance</a>
+                        <a href="#" class="tag">#deductions</a>
+                        <a href="#" class="tag">#irs</a>
+                        <a href="#" class="tag">#business</a>
+                        <a href="#" class="tag">#startup</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="background: var(--bg-dark-deep); color: white; padding: 4rem 0; margin-top: 4rem;">
+        <div class="container" style="text-align: center;">
+            <p>&copy; 2026 Neuraltax AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Chat Widget Trigger -->
+    <div class="chat-widget">
+        <div class="chat-trigger" id="chatTrigger">
+            <img src="nerea_avatar.png" alt="Nerea">
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Dashboard - NeuralTax AI</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .sidebar-nav a.active,
+        .sidebar-nav a:hover {
+            background: rgba(74, 222, 128, 0.1);
+            color: var(--accent-green-bright);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-pending {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+        .status-action {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            background: linear-gradient(180deg, rgba(74, 222, 128, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+            border-bottom: 2px solid var(--accent-green-bright);
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding-bottom: 0px;
+        }
+
+        .chart-bar {
+            width: 40px;
+            background: var(--accent-green-bright);
+            border-radius: 4px 4px 0 0;
+            opacity: 0.7;
+            transition: height 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo" style="margin-bottom: 3rem;">Neuraltax <span
+                    style="font-size: 0.8rem; color: var(--accent-mint); margin-left: 0.5rem;">AGENT</span></div>
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="#" class="active">Agent</a></li>
+                    <li><a href="#">Clients</a></li>
+                    <li><a href="#">Commissions</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header style="background: transparent; padding: 0; margin-bottom: 2rem; position: static;">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <h2>Agent Overview</h2>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="text-align: right;">
+                            <div style="font-weight: 600;">Nerea Agent</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">ID: AG-8821</div>
+                        </div>
+                        <img src="nerea_avatar.png" style="width: 40px; height: 40px; border-radius: 50%;" alt="Agent">
+                    </div>
+                </div>
+            </header>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                <div class="stat-card">
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Total Clients</div>
+                    <div style="font-size: 1.5rem; font-weight: 700;">142</div>
+                    <div style="font-size: 0.8rem; color: var(--accent-green-bright);">+12 this month</div>
+                </div>
+                <div class="stat-card">
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Pending Actions</div>
+                    <div style="font-size: 1.5rem; font-weight: 700;">8</div>
+                    <div style="font-size: 0.8rem; color: #ef4444;">Requires attention</div>
+                </div>
+                <div class="stat-card">
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Total Revenue</div>
+                    <div style="font-size: 1.5rem; font-weight: 700;">$45,200</div>
+                </div>
+                <div class="stat-card">
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Avg. Commission</div>
+                    <div style="font-size: 1.5rem; font-weight: 700;">$318</div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+                <div class="card" style="background: white;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3>Client Performance</h3>
+                        <select style="padding: 0.5rem; border-radius: 8px; border: 1px solid #ddd;">
+                            <option>Last 30 Days</option>
+                            <option>This Year</option>
+                        </select>
+                    </div>
+                    <div class="chart-placeholder">
+                        <div class="chart-bar" style="height: 40%;"></div>
+                        <div class="chart-bar" style="height: 65%;"></div>
+                        <div class="chart-bar" style="height: 50%;"></div>
+                        <div class="chart-bar" style="height: 85%;"></div>
+                        <div class="chart-bar" style="height: 60%;"></div>
+                        <div class="chart-bar" style="height: 75%;"></div>
+                        <div class="chart-bar" style="height: 90%;"></div>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.8rem;">
+                        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                    </div>
+                </div>
+
+                <div class="card" style="background: white;">
+                    <h3>Recent Alerts</h3>
+                    <ul style="list-style: none; margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                        <li style="display: flex; gap: 1rem; align-items: start;">
+                            <div
+                                style="width: 8px; height: 8px; background: #ef4444; border-radius: 50%; margin-top: 6px;">
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Missing W-2 Form</div>
+                                <div style="color: var(--text-secondary); font-size: 0.8rem;">Client: Sarah Connor</div>
+                            </div>
+                        </li>
+                        <li style="display: flex; gap: 1rem; align-items: start;">
+                            <div
+                                style="width: 8px; height: 8px; background: #eab308; border-radius: 50%; margin-top: 6px;">
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Review Required</div>
+                                <div style="color: var(--text-secondary); font-size: 0.8rem;">Client: John Doe</div>
+                            </div>
+                        </li>
+                        <li style="display: flex; gap: 1rem; align-items: start;">
+                            <div
+                                style="width: 8px; height: 8px; background: var(--accent-green-bright); border-radius: 50%; margin-top: 6px;">
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Filing Accepted</div>
+                                <div style="color: var(--text-secondary); font-size: 0.8rem;">Client: Emily Blunt</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 2rem;">View
+                        All Alerts</a>
+                </div>
+            </div>
+
+            <div class="card" style="background: white; margin-top: 1.5rem;">
+                <h3>Active Clients</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>Filing Type</th>
+                            <th>Status</th>
+                            <th>Last Update</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="font-weight: 600;">Michael Scott</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">michael@dundermifflin.com
+                                </div>
+                            </td>
+                            <td>Business</td>
+                            <td><span class="status-badge status-pending">In Progress</span></td>
+                            <td>2 hours ago</td>
+                            <td><a href="#"
+                                    style="color: var(--accent-green-bright); font-weight: 600; text-decoration: none;">Review</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="font-weight: 600;">Pam Beesly</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">pam@art.com</div>
+                            </td>
+                            <td>Individual</td>
+                            <td><span class="status-badge status-success">Ready to File</span></td>
+                            <td>1 day ago</td>
+                            <td><a href="#"
+                                    style="color: var(--accent-green-bright); font-weight: 600; text-decoration: none;">File
+                                    Now</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="font-weight: 600;">Dwight Schrute</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">dwight@farms.com</div>
+                            </td>
+                            <td>Business</td>
+                            <td><span class="status-badge status-action">Missing Docs</span></td>
+                            <td>3 days ago</td>
+                            <td><a href="#"
+                                    style="color: var(--accent-green-bright); font-weight: 600; text-decoration: none;">Request</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Chat Widget Trigger -->
+    <div class="chat-widget">
+        <div class="chat-trigger" id="chatTrigger">
+            <img src="nerea_avatar.png" alt="Nerea">
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

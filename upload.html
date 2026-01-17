@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Document Upload - NeuralTax AI</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .upload-container {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--accent-mint);
+            background: rgba(157, 211, 175, 0.05);
+            border-radius: var(--border-radius);
+            padding: 4rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+
+        .upload-area:hover {
+            background: rgba(157, 211, 175, 0.1);
+            border-color: var(--accent-green-bright);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: var(--accent-mint);
+            margin-bottom: 1rem;
+        }
+
+        .doc-list {
+            background: white;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .doc-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .doc-item:last-child {
+            border-bottom: none;
+        }
+
+        .doc-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .doc-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-light-green);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-sage);
+            font-weight: 600;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            display: inline-flex;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <span style="font-size: 1.8rem;">N</span>euraltax
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="#" class="active" style="color: var(--text-light);">Documents</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="upload-container">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="margin-bottom: 1rem;">Secure Document Vault</h1>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Upload your tax documents here. Our AI will
+                automatically extract the data.</p>
+            <div class="security-badge">
+                🔒 256-bit End-to-End Encryption
+            </div>
+        </div>
+
+        <div class="upload-area" id="dropZone">
+            <div class="upload-icon">☁️</div>
+            <h3 style="margin-bottom: 0.5rem;">Drag & Drop your files here</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Supports PDF, JPG, PNG (Max 25MB)</p>
+            <button class="btn btn-primary">Browse Files</button>
+        </div>
+
+        <h3 style="margin-bottom: 1rem;">Required Documents</h3>
+        <div class="doc-list">
+            <div class="doc-item">
+                <div class="doc-info">
+                    <div class="doc-icon">W2</div>
+                    <div>
+                        <div style="font-weight: 600;">W-2 Form</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Wage and Tax Statement</div>
+                    </div>
+                </div>
+                <div class="status-badge status-pending"
+                    style="background: #fee2e2; color: #991b1b; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.8rem;">
+                    Missing</div>
+            </div>
+            <div class="doc-item">
+                <div class="doc-info">
+                    <div class="doc-icon">ID</div>
+                    <div>
+                        <div style="font-weight: 600;">Driver's License</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Proof of Identity</div>
+                    </div>
+                </div>
+                <div class="status-badge status-success"
+                    style="background: #dcfce7; color: #166534; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.8rem;">
+                    Uploaded</div>
+            </div>
+            <div class="doc-item">
+                <div class="doc-info">
+                    <div class="doc-icon">1099</div>
+                    <div>
+                        <div style="font-weight: 600;">1099-NEC</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Nonemployee Compensation</div>
+                    </div>
+                </div>
+                <div class="status-badge status-pending"
+                    style="background: #fef9c3; color: #854d0e; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.8rem;">
+                    Processing</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; text-align: right;">
+            <a href="wizard.html" class="btn btn-primary">Continue to Filing Wizard →</a>
+        </div>
+    </div>
+
+    <!-- Chat Widget Trigger -->
+    <div class="chat-widget">
+        <div class="chat-trigger" id="chatTrigger">
+            <img src="nerea_avatar.png" alt="Nerea">
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        const dropZone = document.getElementById('dropZone');
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--accent-green-bright)';
+            dropZone.style.background = 'rgba(74, 222, 128, 0.1)';
+        });
+
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--accent-mint)';
+            dropZone.style.background = 'rgba(157, 211, 175, 0.05)';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--accent-mint)';
+            dropZone.style.background = 'rgba(157, 211, 175, 0.05)';
+            alert('Demo: File upload simulation. In production, this would securely transmit your file.');
+        });
+    </script>
+</body>
+
+</html>
