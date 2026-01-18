@@ -1,0 +1,65 @@
+{
+    "common": {
+        "dashboard": "Dashboard",
+        "clients": "Clientes",
+        "ai_tools": "Herramientas IA",
+        "documents": "Documentos",
+        "reports": "Reportes",
+        "settings": "Configuración",
+        "logout": "Salir",
+        "back_to_portals": "Volver a Portales",
+        "portal_of": "Portal de",
+        "agents": "Agentes",
+        "agent": "AGENTE",
+        "neuraltax": "Neuraltax",
+        "online": "En línea",
+        "view_all": "Ver Todo"
+    },
+    "dashboard": {
+        "title": "Agentes",
+        "subtitle": "Dashboard de Agente",
+        "stats": {
+            "total_clients": "Total Clientes",
+            "monthly_revenue": "Ingresos del Mes",
+            "completed_returns": "Declaraciones Completadas",
+            "satisfaction_rate": "Tasa de Satisfacción",
+            "this_month": "este mes"
+        },
+        "sections": {
+            "membership": "Distribución de Membresía",
+            "membership_labels": {
+                "vip": "Miembros VIP",
+                "premium": "Miembros Premium",
+                "free": "Miembros Gratuitos"
+            },
+            "upcoming_tasks": "Próximas Tareas",
+            "recent_activity": "Actividad Reciente"
+        },
+        "tasks": {
+            "high": "Alta",
+            "medium": "Media",
+            "low": "Baja"
+        }
+    },
+    "clients": {
+        "title": "Mis Clientes",
+        "subtitle": "Gestiona y comunícate con tus clientes",
+        "add_client": "Agregar Cliente",
+        "view_dashboard": "Ver Dashboard",
+        "fiscal_year": "Año Fiscal",
+        "last_contact": "Último contacto",
+        "time": {
+            "today": "Hoy",
+            "days_ago": "Hace {{count}} días",
+            "week_ago": "Hace 1 semana"
+        },
+        "tags": {
+            "vip": "VIP",
+            "premium": "Premium",
+            "member": "Miembro",
+            "active": "Activo",
+            "in_review": "En Revisión",
+            "pending": "Pendiente"
+        }
+    }
+}

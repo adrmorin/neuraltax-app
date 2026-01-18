@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-const RecentActivity = () => {
+const RecentActivity = ({ title }) => {
+    const { t } = useTranslation();
+
     const activities = [
         { title: 'Completed tax return', desc: 'John Anderson', time: '2 hours ago', color: '#688071' },
         { title: 'Uploaded W-2 form', desc: 'Lisa Thompson', time: '4 hours ago', color: '#688071' },
@@ -9,7 +12,7 @@ const RecentActivity = () => {
 
     return (
         <div className="card">
-            <h3 className="card-title" style={{ marginBottom: '1.5rem' }}>Recent Activity</h3>
+            <h3 className="card-title" style={{ marginBottom: '1.5rem' }}>{title || t('dashboard.sections.recent_activity')}</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 {activities.map((activity, index) => (
                     <div key={index} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>

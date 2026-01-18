@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Chatbot.css'; // We'll create this or rely on global styles
-import nereaAvatar from '../../assets/neuraltax_logo.png';
+import nereaAvatar from '../../assets/nerea_avatar.png';
 
 const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);

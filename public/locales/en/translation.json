@@ -1,0 +1,65 @@
+{
+    "common": {
+        "dashboard": "Dashboard",
+        "clients": "Clients",
+        "ai_tools": "AI Tools",
+        "documents": "Documents",
+        "reports": "Reports",
+        "settings": "Settings",
+        "logout": "Logout",
+        "back_to_portals": "Back to Portals",
+        "portal_of": "Portal of",
+        "agents": "Agents",
+        "agent": "AGENT",
+        "neuraltax": "Neuraltax",
+        "online": "Online",
+        "view_all": "View All"
+    },
+    "dashboard": {
+        "title": "Agents",
+        "subtitle": "Agent Dashboard",
+        "stats": {
+            "total_clients": "Total Clients",
+            "monthly_revenue": "Monthly Revenue",
+            "completed_returns": "Completed Returns",
+            "satisfaction_rate": "Satisfaction Rate",
+            "this_month": "this month"
+        },
+        "sections": {
+            "membership": "Membership Distribution",
+            "membership_labels": {
+                "vip": "VIP Members",
+                "premium": "Premium Members",
+                "free": "Free Members"
+            },
+            "upcoming_tasks": "Upcoming Tasks",
+            "recent_activity": "Recent Activity"
+        },
+        "tasks": {
+            "high": "High",
+            "medium": "Medium",
+            "low": "Low"
+        }
+    },
+    "clients": {
+        "title": "My Clients",
+        "subtitle": "Manage and communicate with your clients",
+        "add_client": "Add Client",
+        "view_dashboard": "View Dashboard",
+        "fiscal_year": "Fiscal Year",
+        "last_contact": "Last contact",
+        "time": {
+            "today": "Today",
+            "days_ago": "{{count}} days ago",
+            "week_ago": "1 week ago"
+        },
+        "tags": {
+            "vip": "VIP",
+            "premium": "Premium",
+            "member": "Member",
+            "active": "Active",
+            "in_review": "In Review",
+            "pending": "Pending"
+        }
+    }
+}

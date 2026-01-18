@@ -659,7 +659,11 @@ nav a:hover {
     padding: 4rem 0 2rem;
     font-size: 0.9rem;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-}`n`n.neuraltax-footer .logo img {`n    filter: brightness(0) saturate(100%) invert(96%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(105%) contrast(105%);`n}
+}
+
+.neuraltax-footer .logo img {
+    filter: brightness(0) saturate(100%) invert(96%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(105%) contrast(105%);
+}
 
 .footer-top {
     display: grid;
@@ -1591,6 +1595,7 @@ nav a:hover {
         display: none; /* Hide nav links on mobile for now */
     }
 }
+
 
 
 

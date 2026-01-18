@@ -1,18 +1,21 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-const UpcomingTasks = () => {
+const UpcomingTasks = ({ title }) => {
+    const { t } = useTranslation();
+
     const tasks = [
-        { title: 'Complete tax return for Sarah Johnson', client: 'Sarah Johnson', priority: 'High', date: '2024-12-05', priorityColor: '#fee2e2', priorityTextColor: '#991b1b' },
-        { title: 'Review Q4 documents for Michael Chen', client: 'Michael Chen', priority: 'Medium', date: '2024-12-08', priorityColor: '#f1f5f9', priorityTextColor: '#475569' },
-        { title: 'Schedule consultation with Emma Wilson', client: 'Emma Wilson', priority: 'Low', date: '2024-12-10', priorityColor: '#dcfce7', priorityTextColor: '#166534' },
-        { title: 'Prepare year-end summary for David Martinez', client: 'David Martinez', priority: 'High', date: '2024-12-06', priorityColor: '#fee2e2', priorityTextColor: '#991b1b' }
+        { title: 'Complete tax return for Sarah Johnson', client: 'Sarah Johnson', priority: 'high', date: '2024-12-05', priorityColor: '#fee2e2', priorityTextColor: '#991b1b' },
+        { title: 'Review Q4 documents for Michael Chen', client: 'Michael Chen', priority: 'medium', date: '2024-12-08', priorityColor: '#f1f5f9', priorityTextColor: '#475569' },
+        { title: 'Schedule consultation with Emma Wilson', client: 'Emma Wilson', priority: 'low', date: '2024-12-10', priorityColor: '#dcfce7', priorityTextColor: '#166534' },
+        { title: 'Prepare year-end summary for David Martinez', client: 'David Martinez', priority: 'high', date: '2024-12-06', priorityColor: '#fee2e2', priorityTextColor: '#991b1b' }
     ];
 
     return (
         <div className="card">
             <div className="card-header">
-                <h3 className="card-title">Upcoming Tasks</h3>
-                <button className="btn btn-secondary" style={{ padding: '0.25rem 0.75rem', fontSize: '0.85rem' }}>View All</button>
+                <h3 className="card-title">{title || t('dashboard.sections.upcoming_tasks')}</h3>
+                <button className="btn btn-secondary" style={{ padding: '0.25rem 0.75rem', fontSize: '0.85rem' }}>{t('common.view_all')}</button>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {tasks.map((task, index) => (
@@ -31,7 +34,7 @@ const UpcomingTasks = () => {
                                 fontSize: '0.75rem',
                                 fontWeight: 600
                             }}>
-                                {task.priority}
+                                {t(`dashboard.tasks.${task.priority}`)}
                             </span>
                             <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{task.date}</span>
                         </div>

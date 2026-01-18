@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import Wizard from './pages/Wizard';
 import Blog from './pages/Blog';
 import Agent from './pages/Agent';
+import Clients from './pages/Clients';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
       {/* Protected Routes with Dashboard Layout */}
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/clients" element={<Clients />} />
         <Route path="/returns" element={<Returns />} />
         <Route path="/upload" element={<Upload />} />
         <Route path="/calculator" element={<Calculator />} />

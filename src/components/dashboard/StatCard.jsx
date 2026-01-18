@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const StatCard = ({ title, value, change, icon, color }) => {
+    const { t } = useTranslation();
+
     return (
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -22,7 +25,7 @@ const StatCard = ({ title, value, change, icon, color }) => {
                 </div>
             </div>
             <div style={{ fontSize: '0.85rem', color: change.startsWith('+') ? 'var(--accent-green-bright)' : '#ef4444', fontWeight: 500 }}>
-                {change} <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>this month</span>
+                {change} <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>{t('dashboard.stats.this_month')}</span>
             </div>
         </div>
     );

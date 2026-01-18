@@ -1,15 +1,18 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-const MembershipDistribution = () => {
+const MembershipDistribution = ({ title }) => {
+    const { t } = useTranslation();
+
     const data = [
-        { label: 'VIP Members', value: 23, percentage: 26, color: '#688071' },
-        { label: 'Premium Members', value: 38, percentage: 44, color: '#9DD3AF' },
-        { label: 'Free Members', value: 26, percentage: 30, color: '#e2e8f0' }
+        { label: t('dashboard.sections.membership_labels.vip'), value: 23, percentage: 26, color: '#688071' },
+        { label: t('dashboard.sections.membership_labels.premium'), value: 38, percentage: 44, color: '#9DD3AF' },
+        { label: t('dashboard.sections.membership_labels.free'), value: 26, percentage: 30, color: '#e2e8f0' }
     ];
 
     return (
         <div className="card">
-            <h3 className="card-title" style={{ marginBottom: '1.5rem' }}>Membership Distribution</h3>
+            <h3 className="card-title" style={{ marginBottom: '1.5rem' }}>{title || t('dashboard.sections.membership')}</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 {data.map((item, index) => (
                     <div key={index}>
