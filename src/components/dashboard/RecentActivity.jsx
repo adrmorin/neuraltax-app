@@ -16,7 +16,9 @@ const RecentActivity = ({ title }) => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 {activities.map((activity, index) => (
                     <div key={index} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: activity.color, marginTop: '6px' }}></div>
+                        <div style={{ color: activity.color, marginTop: '2px' }}>
+                            <span className="material-symbols-outlined" style={{ fontSize: '1.2rem' }}>history</span>
+                        </div>
                         <div style={{ flex: 1, paddingBottom: index !== activities.length - 1 ? '1.5rem' : '0', borderBottom: index !== activities.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
                             <div style={{ fontWeight: 500 }}>{activity.title}</div>
                             <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{activity.desc}</div>

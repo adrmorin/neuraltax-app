@@ -39,10 +39,10 @@ const Dashboard = () => {
 
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', marginBottom: '2rem' }}>
-                <StatCard title={t('dashboard.stats.total_clients')} value="87" change="+12%" icon="fas fa-users" color="104, 128, 113" />
-                <StatCard title={t('dashboard.stats.monthly_revenue')} value="$24,580" change="+8%" icon="fas fa-dollar-sign" color="104, 128, 113" />
-                <StatCard title={t('dashboard.stats.completed_returns')} value="43" change="+15%" icon="fas fa-file-alt" color="104, 128, 113" />
-                <StatCard title={t('dashboard.stats.satisfaction_rate')} value="98%" change="+2%" icon="fas fa-chart-line" color="104, 128, 113" />
+                <StatCard title={t('dashboard.stats.total_clients')} value="87" change="+12%" icon="group" color="104, 128, 113" />
+                <StatCard title={t('dashboard.stats.monthly_revenue')} value="$24,580" change="+8%" icon="payments" color="104, 128, 113" />
+                <StatCard title={t('dashboard.stats.completed_returns')} value="43" change="+15%" icon="task_alt" color="104, 128, 113" />
+                <StatCard title={t('dashboard.stats.satisfaction_rate')} value="98%" change="+2%" icon="star" color="104, 128, 113" />
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '2rem', marginBottom: '2rem' }}>

@@ -7,7 +7,8 @@
         "reports": "Reportes",
         "settings": "Configuración",
         "logout": "Salir",
-        "back_to_portals": "Volver a Portales",
+        "back_to_home": "Volver a Home",
+        "toggle_sidebar": "Contraer Menú",
         "portal_of": "Portal de",
         "agents": "Agentes",
         "agent": "AGENTE",
@@ -60,6 +61,56 @@
             "active": "Activo",
             "in_review": "En Revisión",
             "pending": "Pendiente"
+        }
+    },
+    "chatbot": {
+        "role": "Experta en Impuestos IA • En línea",
+        "placeholder": "Escribe tu mensaje...",
+        "encrypted_notice": "Encriptado. No compartas SSN/ITIN.",
+        "pii_warning": "⚠️ He detectado información sensible (SSN/ITIN). Por tu seguridad, **no** compartas estos detalles en el chat. Usa nuestra función segura de Carga de Documentos en su lugar.",
+        "responses": {
+            "greeting": [
+                "¡Hola! Soy Nerea, tu Asistente de Impuestos IA. ¿Listo para organizar tus impuestos?",
+                "¡Hola! Soy Nerea. ¿Cómo puedo facilitar tu temporada de impuestos hoy?",
+                "¡Saludos! Soy Nerea, aquí para ayudarte a maximizar tu reembolso. ¿Qué tienes en mente?"
+            ],
+            "wizard_help": "Estoy aquí contigo. ¿En qué necesitas ayuda?",
+            "security_check": "Tu seguridad es nuestra prioridad. <br><br>Usamos **Encriptación de Extremo a Extremo de 256 bits** para todas las cargas. ¡Tus documentos están más seguros aquí que en un archivador!",
+            "file_types": "Aceptamos archivos **PDF, JPG y PNG** de hasta 25MB. <br><br>Asegúrate de que el texto sea claro y legible para que nuestra IA extraiga los datos con precisión.",
+            "thanks": "¡De nada! ¿Hay algo más en lo que pueda ayudarte?",
+            "goodbye": "¡Adiós! Vuelve si tienes más preguntas. ¡Feliz declaración!",
+            "joke": "¿Por qué el auditor cruzó la calle? <br><br>¡Para mirar los recibos del pollo! 🐔🧾",
+            "check_status": "Tu Declaración Federal 2026 está actualmente **En Proceso**. <br><br>La presentamos el 18 de enero de 2026. El IRS suele aceptar declaraciones en 24-48 horas.",
+            "check_status_dashboard": "Veo que estás en el dashboard. El estado de tu Declaración Federal 2026 es actualmente **En Proceso**.",
+            "estimate_refund": "Basado en tus últimos datos, tu Reembolso Federal estimado es de **$2,450**. <br><br>Este monto está sujeto a la aprobación final del IRS.",
+            "estimate_refund_dashboard": "Según tu dashboard, tu Reembolso Federal estimado es de **$2,450**. <br><br>Este monto está pendiente de aprobación del IRS.",
+            "upload_docs": "Puedes cargar de forma segura tus W-2, 1099 y otros documentos fiscales aquí.",
+            "talk_to_human": "Puedo conectarte con un profesional de impuestos certificado. <br><br>Ten en cuenta que el soporte en vivo es una función **Premium**. ¿Te gustaría mejorar tu plan?",
+            "upgrade": "¡Gran elección! Premium incluye protección contra auditorías, soporte en vivo y procesamiento prioritario.",
+            "help": "Puedo ayudarte a verificar el **estado de tu declaración**, estimar tu **reembolso** o **cargar documentos**. ¿Qué te gustaría hacer?",
+            "deadline": "Para el año fiscal 2026, la fecha límite de presentación es el **15 de abril de 2027**. <br><br>Si necesitas más tiempo, puedes solicitar una extensión.",
+            "extension": "Puedes presentar el **Formulario 4868** para obtener una extensión automática de 6 meses hasta el 15 de octubre. <br><br>Recuerda, ¡una extensión para presentar **no** es una extensión para pagar los impuestos debidos!",
+            "eligibility_pets": "Generalmente, **no** puedes reclamar mascotas como dependientes. 🐶 <br><br>Sin embargo, si tu perro es un animal de servicio certificado para una condición médica, los gastos podrían ser deducibles.",
+            "eligibility_general": "La elegibilidad fiscal depende de muchos factores. Puedo ayudarte con reglas generales, pero para situaciones específicas, un profesional es lo mejor.",
+            "unknown": "¡Aún estoy aprendiendo! No entendí bien eso. Puedes preguntarme sobre el **estado de tu declaración**, **estimación de reembolso** o cómo **cargar documentos**."
+        },
+        "options": {
+            "check_status": "Verificar Estado",
+            "estimate_refund": "Estimar Reembolso",
+            "upload_docs": "Cargar Documentos",
+            "continue": "Continuar",
+            "talk_to_human": "Hablar con Humano",
+            "file_types": "Tipos de Archivo",
+            "security": "Seguridad",
+            "that_was_bad": "Ese fue malo",
+            "one_more": "Uno más",
+            "spend_it_wisely": "¡Gástalo sabiamente!",
+            "go_to_upload": "Ir a Página de Carga",
+            "upgrade_plan": "Mejorar Plan",
+            "no_thanks": "No, gracias",
+            "file_extension": "Extensión de Archivo",
+            "deductions_help": "Ayuda con Deducciones",
+            "help": "Ayuda"
         }
     }
 }

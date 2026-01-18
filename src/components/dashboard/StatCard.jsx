@@ -21,7 +21,7 @@ const StatCard = ({ title, value, change, icon, color }) => {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <i className={icon}></i>
+                    <span className="material-symbols-outlined" style={{ fontSize: '1.5rem' }}>{icon}</span>
                 </div>
             </div>
             <div style={{ fontSize: '0.85rem', color: change.startsWith('+') ? 'var(--accent-green-bright)' : '#ef4444', fontWeight: 500 }}>

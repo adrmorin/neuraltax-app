@@ -4,10 +4,12 @@ import Sidebar from './Sidebar';
 import Chatbot from '../chatbot/Chatbot';
 
 const DashboardLayout = () => {
+    const [isCollapsed, setIsCollapsed] = React.useState(false);
+
     return (
         <div className="dashboard-container">
-            <Sidebar />
-            <main className="main-content">
+            <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+            <main className={`main-content ${isCollapsed ? 'sidebar-collapsed' : ''}`}>
                 <Outlet />
             </main>
             <Chatbot />

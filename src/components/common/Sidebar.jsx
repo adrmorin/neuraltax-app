@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './Sidebar.css';
 
-const Sidebar = () => {
+const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
     const { t, i18n } = useTranslation();
 
     const toggleLanguage = (e) => {
@@ -12,45 +12,56 @@ const Sidebar = () => {
         i18n.changeLanguage(newLang);
     };
 
+    const toggleSidebar = () => {
+        setIsCollapsed(!isCollapsed);
+    };
+
     return (
-        <aside className="sidebar">
+        <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
             <div className="sidebar-header">
-                <Link to="/" className="back-link">
-                    <i className="fas fa-arrow-left"></i> {t('common.back_to_portals')}
-                </Link>
-                <div className="portal-info">
-                    <span className="portal-label">{t('common.portal_of')}</span>
-                    <div className="portal-brand">
-                        <div className="avatar-nt">NT</div>
-                        <span className="portal-name">{t('common.agents')}</span>
+                <button className="toggle-btn" onClick={toggleSidebar} title={t('common.toggle_sidebar')}>
+                    <span className="material-symbols-outlined">{isCollapsed ? 'menu' : 'menu_open'}</span>
+                </button>
+                {!isCollapsed && (
+                    <div className="portal-info">
+                        <span className="portal-label">{t('common.portal_of')}</span>
+                        <div className="portal-brand">
+                            <div className="avatar-nt">NT</div>
+                            <span className="portal-name">{t('common.agents')}</span>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
 
             <ul className="sidebar-nav">
                 <li>
                     <NavLink to="/dashboard" end className={({ isActive }) => isActive ? 'active' : ''}>
-                        <i className="fas fa-th-large"></i> {t('common.dashboard')}
+                        <span className="material-symbols-outlined">dashboard</span>
+                        {!isCollapsed && <span>{t('common.dashboard')}</span>}
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/clients" className={({ isActive }) => isActive ? 'active' : ''}>
-                        <i className="fas fa-users"></i> {t('common.clients')}
+                        <span className="material-symbols-outlined">group</span>
+                        {!isCollapsed && <span>{t('common.clients')}</span>}
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/ai-tools" className={({ isActive }) => isActive ? 'active' : ''}>
-                        <i className="fas fa-brain"></i> {t('common.ai_tools')}
+                        <span className="material-symbols-outlined">psychology</span>
+                        {!isCollapsed && <span>{t('common.ai_tools')}</span>}
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/documents" className={({ isActive }) => isActive ? 'active' : ''}>
-                        <i className="fas fa-file-alt"></i> {t('common.documents')}
+                        <span className="material-symbols-outlined">description</span>
+                        {!isCollapsed && <span>{t('common.documents')}</span>}
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/reports" className={({ isActive }) => isActive ? 'active' : ''}>
-                        <i className="fas fa-chart-bar"></i> {t('common.reports')}
+                        <span className="material-symbols-outlined">bar_chart</span>
+                        {!isCollapsed && <span>{t('common.reports')}</span>}
                     </NavLink>
                 </li>
             </ul>
@@ -58,18 +69,27 @@ const Sidebar = () => {
             <div className="sidebar-footer">
                 <ul className="sidebar-footer-nav">
                     <li>
+                        <Link to="/" className="back-link">
+                            <span className="material-symbols-outlined">home</span>
+                            {!isCollapsed && <span>{t('common.back_to_home')}</span>}
+                        </Link>
+                    </li>
+                    <li>
                         <a href="#lang" onClick={toggleLanguage} className="lang-switcher">
-                            <i className="fas fa-globe"></i> {i18n.language === 'es' ? 'EN' : 'ES'}
+                            <span className="material-symbols-outlined">language</span>
+                            {!isCollapsed && <span>{i18n.language === 'es' ? 'EN' : 'ES'}</span>}
                         </a>
                     </li>
                     <li>
                         <NavLink to="/settings">
-                            <i className="fas fa-cog"></i> {t('common.settings')}
+                            <span className="material-symbols-outlined">settings</span>
+                            {!isCollapsed && <span>{t('common.settings')}</span>}
                         </NavLink>
                     </li>
                     <li>
                         <Link to="/login">
-                            <i className="fas fa-sign-out-alt"></i> {t('common.logout')}
+                            <span className="material-symbols-outlined">logout</span>
+                            {!isCollapsed && <span>{t('common.logout')}</span>}
                         </Link>
                     </li>
                 </ul>

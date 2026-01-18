@@ -87,7 +87,10 @@ const Clients = () => {
                         <h2>{t('clients.title')}</h2>
                         <p className="content-subtitle">{t('clients.subtitle')}</p>
                     </div>
-                    <button className="btn-add-client">{t('clients.add_client')}</button>
+                    <button className="btn-add-client">
+                        <span className="material-symbols-outlined" style={{ verticalAlign: 'middle', marginRight: '0.5rem' }}>person_add</span>
+                        {t('clients.add_client')}
+                    </button>
                 </div>
 
                 <div className="clients-list">
@@ -112,13 +115,14 @@ const Clients = () => {
                             </div>
                             <div className="client-actions">
                                 <button className="btn-view-dashboard">
-                                    <i className="far fa-eye"></i> {t('clients.view_dashboard')}
+                                    <span className="material-symbols-outlined" style={{ verticalAlign: 'middle', marginRight: '0.5rem', fontSize: '1.2rem' }}>visibility</span>
+                                    {t('clients.view_dashboard')}
                                 </button>
                                 <div className="action-icons">
-                                    <i className="far fa-comment-alt action-icon"></i>
-                                    <i className="fas fa-phone-alt action-icon"></i>
-                                    <i className="far fa-envelope action-icon"></i>
-                                    <i className="fas fa-ellipsis-v action-icon"></i>
+                                    <span className="material-symbols-outlined action-icon">chat</span>
+                                    <span className="material-symbols-outlined action-icon">call</span>
+                                    <span className="material-symbols-outlined action-icon">mail</span>
+                                    <span className="material-symbols-outlined action-icon">more_vert</span>
                                 </div>
                             </div>
                         </div>

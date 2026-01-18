@@ -15,12 +15,17 @@ const UpcomingTasks = ({ title }) => {
         <div className="card">
             <div className="card-header">
                 <h3 className="card-title">{title || t('dashboard.sections.upcoming_tasks')}</h3>
-                <button className="btn btn-secondary" style={{ padding: '0.25rem 0.75rem', fontSize: '0.85rem' }}>{t('common.view_all')}</button>
+                <button className="btn btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.25rem 0.75rem', fontSize: '0.85rem' }}>
+                    <span className="material-symbols-outlined" style={{ fontSize: '1.1rem' }}>list</span>
+                    {t('common.view_all')}
+                </button>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {tasks.map((task, index) => (
                     <div key={index} style={{ display: 'flex', alignItems: 'center', padding: '1rem', border: '1px solid #f1f5f9', borderRadius: '8px', gap: '1rem' }}>
-                        <div style={{ color: 'var(--text-secondary)' }}><i className="far fa-calendar"></i></div>
+                        <div style={{ color: 'var(--text-secondary)' }}>
+                            <span className="material-symbols-outlined" style={{ fontSize: '1.2rem' }}>calendar_today</span>
+                        </div>
                         <div style={{ flex: 1 }}>
                             <div style={{ fontWeight: 500, fontSize: '0.95rem' }}>{task.title}</div>
                             <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{task.client}</div>

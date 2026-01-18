@@ -7,7 +7,8 @@
         "reports": "Reports",
         "settings": "Settings",
         "logout": "Logout",
-        "back_to_portals": "Back to Portals",
+        "back_to_home": "Back to Home",
+        "toggle_sidebar": "Toggle Sidebar",
         "portal_of": "Portal of",
         "agents": "Agents",
         "agent": "AGENT",
@@ -60,6 +61,56 @@
             "active": "Active",
             "in_review": "In Review",
             "pending": "Pending"
+        }
+    },
+    "chatbot": {
+        "role": "AI Tax Expert • Online",
+        "placeholder": "Type your message...",
+        "encrypted_notice": "Encrypted. Do not share SSN/ITIN.",
+        "pii_warning": "⚠️ I detected sensitive information (SSN/ITIN). For your security, please **do not** share these details in the chat. Use our secure Document Upload feature instead.",
+        "responses": {
+            "greeting": [
+                "Hello! I'm Nerea, your AI Tax Assistant. Ready to get your taxes sorted?",
+                "Hi there! I'm Nerea. How can I make your tax season easier today?",
+                "Greetings! I'm Nerea, here to help you maximize your refund. What's on your mind?"
+            ],
+            "wizard_help": "I'm right here with you. What do you need help with?",
+            "security_check": "Your security is our top priority. <br><br>We use **256-bit End-to-End Encryption** for all uploads. Your documents are safer here than in a filing cabinet!",
+            "file_types": "We accept **PDF, JPG, and PNG** files up to 25MB. <br><br>Make sure the text is clear and legible for our AI to extract the data accurately.",
+            "thanks": "You're very welcome! Is there anything else I can help you with?",
+            "goodbye": "Goodbye! Come back if you have more questions. Happy filing!",
+            "joke": "Why did the auditor cross the road? <br><br>To look at the chicken's receipts! 🐔🧾",
+            "check_status": "Your 2026 Federal Return is currently **Processing**. <br><br>We filed it on Jan 18, 2026. The IRS typically accepts returns within 24-48 hours.",
+            "check_status_dashboard": "I see you're on the dashboard. Your 2026 Federal Return status is currently **Processing**.",
+            "estimate_refund": "Based on your latest data, your estimated Federal Refund is **$2,450**. <br><br>This amount is subject to final IRS approval.",
+            "estimate_refund_dashboard": "According to your dashboard, your estimated Federal Refund is **$2,450**. <br><br>This amount is pending IRS approval.",
+            "upload_docs": "You can securely upload your W-2s, 1099s, and other tax documents here.",
+            "talk_to_human": "I can connect you with a certified tax professional. <br><br>Please note that live support is a **Premium** feature. Would you like to upgrade?",
+            "upgrade": "Great choice! Premium includes audit protection, live support, and priority processing.",
+            "help": "I can help you check your **return status**, estimate your **refund**, or **upload documents**. What would you like to do?",
+            "deadline": "For the 2026 tax year, the filing deadline is **April 15, 2027**. <br><br>If you need more time, you can file an extension.",
+            "extension": "You can file **Form 4868** to get an automatic 6-month extension until October 15. <br><br>Remember, an extension to file is **not** an extension to pay any taxes due!",
+            "eligibility_pets": "Generally, you **cannot** claim pets as dependents. 🐶 <br><br>However, if your dog is a certified service animal for a medical condition, expenses might be deductible.",
+            "eligibility_general": "Tax eligibility depends on many factors. I can help with general rules, but for specific situations, a tax pro is best.",
+            "unknown": "I'm still learning! I didn't quite catch that. You can ask me about your **return status**, **refund estimate**, or how to **upload documents**."
+        },
+        "options": {
+            "check_status": "Check Status",
+            "estimate_refund": "Estimate Refund",
+            "upload_docs": "Upload Docs",
+            "continue": "Continue",
+            "talk_to_human": "Talk to Human",
+            "file_types": "File Types",
+            "security": "Security",
+            "that_was_bad": "That was bad",
+            "one_more": "One more",
+            "spend_it_wisely": "Spend it wisely!",
+            "go_to_upload": "Go to Upload Page",
+            "upgrade_plan": "Upgrade Plan",
+            "no_thanks": "No thanks",
+            "file_extension": "File Extension",
+            "deductions_help": "Deductions Help",
+            "help": "Help"
         }
     }
 }
