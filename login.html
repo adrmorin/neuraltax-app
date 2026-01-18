@@ -340,47 +340,35 @@
                     with a qualified tax professional for complex tax situations.</p>
                 <p class="license">Licensed and registered for tax advisory services. All communications are
                     confidential
-                    and secure.</p>
-            </div>
-        </div>
-    </footer>
+                    document.querySelectorAll('.auth-form').forEach(el => el.classList.remove('active'));
+                    document.getElementById(tab + 'Form').classList.add('active');
+                    }
 
-    <script>
-        function switchTab(tab) {
-            // Update tabs
-            document.querySelectorAll('.auth-tab').forEach(el => el.classList.remove('active'));
-            event.target.classList.add('active');
+                    function handleLogin(e) {
+                    e.preventDefault();
+                    const btn = e.target.querySelector('button[type="submit"]');
+                    const originalText = btn.textContent;
 
-            // Update forms
-            document.querySelectorAll('.auth-form').forEach(el => el.classList.remove('active'));
-            document.getElementById(tab + 'Form').classList.add('active');
-        }
+                    btn.textContent = 'Authenticating...';
+                    btn.disabled = true;
 
-        function handleLogin(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
-            const originalText = btn.textContent;
+                    setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                    }, 1500);
+                    }
 
-            btn.textContent = 'Authenticating...';
-            btn.disabled = true;
+                    function handleRegister(e) {
+                    e.preventDefault();
+                    const btn = e.target.querySelector('button[type="submit"]');
 
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 1500);
-        }
+                    btn.textContent = 'Creating Account...';
+                    btn.disabled = true;
 
-        function handleRegister(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
-
-            btn.textContent = 'Creating Account...';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                window.location.href = 'wizard.html';
-            }, 1500);
-        }
-    </script>
+                    setTimeout(() => {
+                    window.location.href = 'wizard.html';
+                    }, 1500);
+                    }
+                    </script>
 </body>
 
 </html>

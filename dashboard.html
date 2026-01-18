@@ -13,6 +13,16 @@
             padding: 1.5rem;
             border-radius: var(--border-radius);
             border: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .sidebar-nav {
@@ -33,12 +43,18 @@
             padding: 0.75rem 1rem;
             border-radius: 8px;
             transition: all 0.2s;
+            font-weight: 500;
         }
 
         .sidebar-nav a.active,
         .sidebar-nav a:hover {
             background: rgba(74, 222, 128, 0.1);
             color: var(--accent-green-bright);
+        }
+
+        .sidebar-nav i {
+            width: 20px;
+            text-align: center;
         }
 
         table {
@@ -53,11 +69,13 @@
             font-weight: 500;
             padding: 1rem;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 0.9rem;
         }
 
         td {
             padding: 1rem;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 0.95rem;
         }
 
         .status-badge {
@@ -65,9 +83,244 @@
             border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 600;
+            display: inline-block;
         }
 
         .status-success {
-            <div class="stat-card"><div style="color: var(--text-secondary); font-size: 0.9rem;">Active Returns</div><div style="font-size: 1.5rem; font-weight: 700;">377</div></div></div><div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;"><div class="card" style="background: white;"><h3>Recent Activity</h3><table><thead><tr><th>Client</th><th>Amount</th><th>Status</th><th>Time</th></tr></thead><tbody><tr><td>Alex Johnson</td><td>$250.00</td><td><span class="status-badge status-success">Success</span></td><td>2 hrs ago</td></tr><tr><td>Maria Garcia</td><td>$1,
-            200.00</td><td><span class="status-badge status-success">Success</span></td><td>5 hrs ago</td></tr></tbody></div></main></div><footer class="neuraltax-footer"><div class="container"><div class="footer-top">< !-- Left Column --><div class="footer-col footer-brand"><div class="logo"><img src="neuraltax_logo.png" alt="NeuralTax AI" style="height: 40px;"></div><h3>Neuraltax AI Expert</h3><p>Your automated tax expert. Simplifying tax management with cutting-edge AI technology and precision.</p><div class="business-reg-box"><i class="fas fa-file-alt"></i><div><span>Business Registration</span><strong>L25000152874</strong></div></div></div>< !-- Middle Column --><div class="footer-col footer-contact"><h4>Contact Information</h4><div class="email-box"><i class="fas fa-envelope"></i><div><span>Email us</span><a href="mailto:neuraltaxai@gmail.com">neuraltaxai@gmail.com</a></div></div><div class="contact-details"><div class="detail-item"><i class="far fa-clock"></i><div><strong>Business Hours</strong><p>Monday - Friday: 9:00 AM - 6:00 PM</p><p>Saturday - Sunday: Closed</p></div></div><div class="detail-item"><i class="fas fa-bolt"></i><div><strong>Response Time</strong><p>Within 24 hours</p></div></div></div></div>< !-- Right Column --><div class="footer-col footer-connect"><div class="connect-header"><h4>Connect With Us</h4><div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-x-twitter"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div></div><div class="footer-links"><a href="#">Our Services</a><a href="#">Pricing</a><a href="#">About Us</a><a href="#">FAQ</a><a href="#">Quick Links</a></div><div class="footer-copyright"><p>&copy;
-            2025 Neuraltax. All rights reserved.</p><div class="legal-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Support</a></div></div></div></div><div class="footer-bottom"><p class="reg-info">Business Registration Number: L25000152874 | Contact: neuraltaxai@gmail.com</p> <p class="disclaimer" >Neuraltax is not meant for collecting PII or securing sensitive data. Please consult with a qualified tax professional for complex tax situations.</p> <p class="license" >Licensed and registered for tax advisory services. All communications are confidential and secure.</p> </div> </div> </footer> < !-- Chat Widget Trigger --> <div class="chat-widget" > <div class="chat-trigger" id="chatTrigger" > <img src="nerea_avatar.png?v=4" alt="Nerea" > </div> </div> <script src="main.js" ></script> </body> </html>
+            background: rgba(74, 222, 128, 0.15);
+            color: #166534;
+        }
+
+        .status-processing {
+            background: rgba(250, 204, 21, 0.15);
+            color: #854d0e;
+        }
+
+        .action-btn {
+            background: white;
+            border: 1px solid #eee;
+            padding: 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .action-btn:hover {
+            border-color: var(--accent-mint);
+            background: rgba(157, 211, 175, 0.05);
+        }
+
+        .action-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-light-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-green-bright);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo" style="margin-bottom: 2rem;">
+                <img src="neuraltax_logo.png" alt="NeuralTax AI" style="height: 30px;">
+            </div>
+
+            <ul class="sidebar-nav">
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> My Returns</a></li>
+                <li><a href="upload.html"><i class="fas fa-cloud-upload-alt"></i> Documents</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+
+            <div style="margin-top: auto; padding-top: 2rem;">
+                <a href="index.html"
+                    style="color: var(--text-secondary); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header style="background: transparent; padding: 0; margin-bottom: 2rem; position: static;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h1 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Welcome back, User</h1>
+                        <p style="color: var(--text-secondary);">Here's what's happening with your taxes.</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <button class="btn"
+                            style="background: white; color: var(--text-dark); border: 1px solid #eee; padding: 0.5rem 1rem; font-size: 0.9rem;">
+                            <i class="far fa-bell"></i>
+                        </button>
+                        <div
+                            style="width: 40px; height: 40px; background: var(--accent-mint); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                            JD
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Stats Grid -->
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+                <div class="stat-card">
+                    <div
+                        style="color: var(--text-secondary); font-size: 0.9rem; display: flex; justify-content: space-between;">
+                        Return Status
+                        <i class="fas fa-spinner" style="color: #eab308;"></i>
+                    </div>
+                    <div style="font-size: 1.5rem; font-weight: 700;">Processing</div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Filed on Jan 18, 2026</div>
+                </div>
+
+                <div class="stat-card">
+                    <div
+                        style="color: var(--text-secondary); font-size: 0.9rem; display: flex; justify-content: space-between;">
+                        Est. Refund
+                        <i class="fas fa-dollar-sign" style="color: var(--accent-green-bright);"></i>
+                    </div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: #166534;">$2,450</div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Pending IRS approval</div>
+                </div>
+
+                <div class="stat-card">
+                    <div
+                        style="color: var(--text-secondary); font-size: 0.9rem; display: flex; justify-content: space-between;">
+                        Action Items
+                        <i class="fas fa-check-circle" style="color: var(--text-secondary);"></i>
+                    </div>
+                    <div style="font-size: 1.5rem; font-weight: 700;">0 Pending</div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">You're all caught up!</div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+                <!-- Recent Activity -->
+                <div class="card" style="background: white; padding: 0; overflow: hidden;">
+                    <div
+                        style="padding: 1.5rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-size: 1.1rem;">Recent Activity</h3>
+                        <a href="#"
+                            style="color: var(--accent-green-bright); text-decoration: none; font-size: 0.9rem;">View
+                            All</a>
+                    </div>
+                    <div style="padding: 0 1.5rem 1.5rem;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Activity</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div style="font-weight: 500;">2026 Federal Return Filed</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Form 1040</div>
+                                    </td>
+                                    <td><span class="status-badge status-processing">Processing</span></td>
+                                    <td>Jan 18, 2026</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="font-weight: 500;">Document Uploaded</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">W-2 (Tech Corp)
+                                        </div>
+                                    </td>
+                                    <td><span class="status-badge status-success">Completed</span></td>
+                                    <td>Jan 18, 2026</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="font-weight: 500;">Account Created</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Welcome to
+                                            NeuralTax</div>
+                                    </td>
+                                    <td><span class="status-badge status-success">Success</span></td>
+                                    <td>Jan 18, 2026</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Quick Actions</h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <a href="upload.html" class="action-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Upload Documents</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">Add W-2s, 1099s, etc.
+                                </div>
+                            </div>
+                        </a>
+
+                        <div class="action-btn" onclick="document.getElementById('chatTrigger').click()">
+                            <div class="action-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Chat with Expert</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">Ask Nerea a question</div>
+                            </div>
+                        </div>
+
+                        <a href="#" class="action-btn">
+                            <div class="action-icon">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Tax Calculator</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">Estimate your liability
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div
+                        style="margin-top: 2rem; background: var(--bg-dark-deep); color: white; padding: 1.5rem; border-radius: 12px; position: relative; overflow: hidden;">
+                        <div style="position: relative; z-index: 1;">
+                            <h4 style="margin-bottom: 0.5rem;">Go Premium</h4>
+                            <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 1rem;">Get audit protection and
+                                live human support.</p>
+                            <button class="btn btn-primary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">Upgrade
+                                Now</button>
+                        </div>
+                        <div style="position: absolute; right: -20px; bottom: -20px; font-size: 5rem; opacity: 0.1;">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Chat Widget Trigger -->
+    <div class="chat-widget">
+        <div class="chat-trigger" id="chatTrigger">
+            <img src="nerea_avatar.png?v=4" alt="Nerea">
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
