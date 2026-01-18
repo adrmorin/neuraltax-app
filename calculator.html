@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculator - NeuralTax AI</title>
+    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .calc-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .calc-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-green-bright);
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .result-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .result-label {
+            color: var(--accent-mint);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .result-sub {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .tax-bracket-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-top: 1rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tax-bracket-fill {
+            height: 100%;
+            background: var(--accent-green-bright);
+            width: 0%;
+            transition: width 0.5s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .calc-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo" style="margin-bottom: 2rem;">
+                <img src="neuraltax_logo.png" alt="NeuralTax AI" style="height: 30px;">
+            </div>
+
+            <ul class="sidebar-nav">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="dashboard.html"><i class="fas fa-columns"></i> Dashboard</a></li>
+                <li><a href="returns.html"><i class="fas fa-file-invoice-dollar"></i> My Returns</a></li>
+                <li><a href="upload.html"><i class="fas fa-cloud-upload-alt"></i> Documents</a></li>
+                <li><a href="#" class="active"><i class="fas fa-calculator"></i> Calculator</a></li>
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+
+            <div style="margin-top: auto; padding-top: 2rem;">
+                <a href="index.html"
+                    style="color: var(--text-secondary); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header style="background: transparent; padding: 0; margin-bottom: 2rem;">
+                <h1 style="font-size: 1.8rem; margin-bottom: 0.5rem;">2026 Tax Estimator</h1>
+                <p style="color: var(--text-secondary);">Estimate your federal tax liability based on projected 2026
+                    brackets.</p>
+            </header>
+
+            <div class="calc-container">
+                <!-- Input Section -->
+                <div class="calc-card">
+                    <h3 style="margin-bottom: 1.5rem;">Your Information</h3>
+
+                    <div class="form-group">
+                        <label class="form-label">Filing Status</label>
+                        <select id="filingStatus" class="form-select">
+                            <option value="single">Single</option>
+                            <option value="married">Married Filing Jointly</option>
+                            <option value="head">Head of Household</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Gross Annual Income</label>
+                        <div style="position: relative;">
+                            <span
+                                style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);">$</span>
+                            <input type="number" id="grossIncome" class="form-input" style="padding-left: 2rem;"
+                                placeholder="e.g. 75000">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">401(k) / IRA Contributions</label>
+                        <div style="position: relative;">
+                            <span
+                                style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);">$</span>
+                            <input type="number" id="retirement" class="form-input" style="padding-left: 2rem;"
+                                placeholder="e.g. 5000">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Deduction Type</label>
+                        <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="radio" name="deduction" value="standard" checked> Standard
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="radio" name="deduction" value="itemized"> Itemized
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="itemizedInput" style="display: none;">
+                        <label class="form-label">Total Itemized Deductions</label>
+                        <div style="position: relative;">
+                            <span
+                                style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);">$</span>
+                            <input type="number" id="itemizedAmount" class="form-input" style="padding-left: 2rem;"
+                                placeholder="e.g. 20000">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="calc-card result-card">
+                    <h3 style="margin-bottom: 1.5rem; color: white;">Estimated Results</h3>
+
+                    <div class="result-item">
+                        <div class="result-label">Estimated Federal Tax</div>
+                        <div class="result-value" id="totalTax">$0</div>
+                        <div class="result-sub">Based on 2026 brackets</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">Effective Tax Rate</div>
+                        <div class="result-value" id="effectiveRate">0%</div>
+                        <div class="result-sub">Percentage of income paid in tax</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">Marginal Tax Bracket</div>
+                        <div class="result-value" id="marginalBracket">10%</div>
+                        <div class="tax-bracket-bar">
+                            <div class="tax-bracket-fill" id="bracketBar"></div>
+                        </div>
+                        <div class="result-sub" style="margin-top: 0.5rem;">Top dollar taxed at this rate</div>
+                    </div>
+
+                    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <p style="font-size: 0.8rem; opacity: 0.7; font-style: italic;">
+                            * This is an estimate for educational purposes only. Actual tax liability may vary based on
+                            specific circumstances.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Chat Widget Trigger -->
+    <div class="chat-widget">
+        <div class="chat-trigger" id="chatTrigger">
+            <img src="nerea_avatar.png?v=4" alt="Nerea">
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="calculator.js"></script>
+</body>
+
+</html>

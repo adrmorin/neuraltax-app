@@ -31,16 +31,38 @@ const ConversationManager = {
         THANKS: 'thanks',
         GOODBYE: 'goodbye',
         JOKE: 'joke',
+        DEADLINE: 'deadline',
+        EXTENSION: 'extension',
+        ELIGIBILITY: 'eligibility',
         UNKNOWN: 'unknown'
     },
 
     detectIntent(message) {
         const lowerMsg = message.toLowerCase();
+        const path = window.location.pathname;
 
         // Context-aware checks
-        if (window.location.pathname.includes('wizard.html')) {
+        if (path.includes('wizard.html')) {
             if (lowerMsg.includes('step') || lowerMsg.includes('next') || lowerMsg.includes('stuck') || lowerMsg.includes('help')) {
                 return this.intents.WIZARD_HELP;
+            }
+        }
+
+        if (path.includes('dashboard.html')) {
+            if (lowerMsg.includes('status') || lowerMsg.includes('track') || lowerMsg.includes('return')) {
+                return this.intents.CHECK_STATUS;
+            }
+            if (lowerMsg.includes('refund') || lowerMsg.includes('much') || lowerMsg.includes('estimate')) {
+                return this.intents.ESTIMATE_REFUND;
+            }
+        }
+
+        if (path.includes('upload.html')) {
+            if (lowerMsg.includes('safe') || lowerMsg.includes('secure') || lowerMsg.includes('encrypt')) {
+                return 'security_check';
+            }
+            if (lowerMsg.includes('type') || lowerMsg.includes('format') || lowerMsg.includes('file')) {
+                return 'file_types';
             }
         }
 
@@ -55,10 +77,17 @@ const ConversationManager = {
         if (lowerMsg.match(/\b(bye|goodbye|see ya|later|adios)\b/)) return this.intents.GOODBYE;
         if (lowerMsg.match(/\b(joke|funny|laugh)\b/)) return this.intents.JOKE;
 
+        // New Intents
+        if (lowerMsg.match(/\b(deadline|due date|when.*due|late)\b/)) return this.intents.DEADLINE;
+        if (lowerMsg.match(/\b(extension|more time|later|delay)\b/)) return this.intents.EXTENSION;
+        if (lowerMsg.match(/\b(can i claim|deduct|eligible|write off|dog|pet|cat)\b/)) return this.intents.ELIGIBILITY;
+
         return this.intents.UNKNOWN;
     },
 
     getResponse(intent, message) {
+        const path = window.location.pathname;
+
         switch (intent) {
             case this.intents.GREETING:
                 const greetings = [
@@ -82,6 +111,16 @@ const ConversationManager = {
                     text: stepHelp,
                     options: ['Continue', 'Talk to Human']
                 };
+            case 'security_check':
+                return {
+                    text: "Your security is our top priority. <br><br>We use **256-bit End-to-End Encryption** for all uploads. Your documents are safer here than in a filing cabinet!",
+                    options: ['Upload Docs', 'File Types']
+                };
+            case 'file_types':
+                return {
+                    text: "We accept **PDF, JPG, and PNG** files up to 25MB. <br><br>Make sure the text is clear and legible for our AI to extract the data accurately.",
+                    options: ['Upload Docs', 'Security']
+                };
             case this.intents.THANKS:
                 return {
                     text: "You're very welcome! Is there anything else I can help you with?",
@@ -98,11 +137,29 @@ const ConversationManager = {
                     options: ['That was bad', 'One more']
                 };
             case this.intents.CHECK_STATUS:
+                if (path.includes('dashboard.html')) {
+                    // Scrape status from dashboard
+                    const statusEl = document.querySelector('.stat-card:nth-child(1) div:nth-child(2)');
+                    const status = statusEl ? statusEl.textContent.trim() : 'Processing';
+                    return {
+                        text: `I see you're on the dashboard. Your 2026 Federal Return status is currently **${status}**.`,
+                        options: ['Estimate Refund', 'Upload Docs']
+                    };
+                }
                 return {
                     text: "Your 2026 Federal Return is currently **Processing**. <br><br>We filed it on Jan 18, 2026. The IRS typically accepts returns within 24-48 hours.",
                     options: ['Estimate Refund', 'Upload Docs']
                 };
             case this.intents.ESTIMATE_REFUND:
+                if (path.includes('dashboard.html')) {
+                    // Scrape refund from dashboard
+                    const refundEl = document.querySelector('.stat-card:nth-child(2) div:nth-child(2)');
+                    const refund = refundEl ? refundEl.textContent.trim() : '$2,450';
+                    return {
+                        text: `According to your dashboard, your estimated Federal Refund is **${refund}**. <br><br>This amount is pending IRS approval.`,
+                        options: ['Check Status', 'Spend it wisely!']
+                    };
+                }
                 return {
                     text: "Based on your latest data, your estimated Federal Refund is **$2,450**. <br><br>This amount is subject to final IRS approval.",
                     options: ['Check Status', 'Spend it wisely!']
@@ -127,6 +184,28 @@ const ConversationManager = {
                     text: "I can help you check your **return status**, estimate your **refund**, or **upload documents**. What would you like to do?",
                     options: ['Check Status', 'Estimate Refund', 'Upload Docs']
                 };
+            // New Responses
+            case this.intents.DEADLINE:
+                return {
+                    text: "For the 2026 tax year, the filing deadline is **April 15, 2027**. <br><br>If you need more time, you can file an extension.",
+                    options: ['File Extension', 'Check Status']
+                };
+            case this.intents.EXTENSION:
+                return {
+                    text: "You can file **Form 4868** to get an automatic 6-month extension until October 15. <br><br>Remember, an extension to file is **not** an extension to pay any taxes due!",
+                    options: ['Estimate Refund', 'Talk to Human']
+                };
+            case this.intents.ELIGIBILITY:
+                if (message.toLowerCase().includes('dog') || message.toLowerCase().includes('pet')) {
+                    return {
+                        text: "Generally, you **cannot** claim pets as dependents. 🐶 <br><br>However, if your dog is a certified service animal for a medical condition, expenses might be deductible.",
+                        options: ['Deductions Help', 'Talk to Human']
+                    };
+                }
+                return {
+                    text: "Tax eligibility depends on many factors. I can help with general rules, but for specific situations, a tax pro is best.",
+                    options: ['Talk to Human', 'Help']
+                };
             default:
                 return {
                     text: "I'm still learning! I didn't quite catch that. You can ask me about your **return status**, **refund estimate**, or how to **upload documents**.",
@@ -150,7 +229,6 @@ function setupChat() {
         chatTrigger.addEventListener('click', () => {
             toggleChat();
         });
-
     }
 }
 
@@ -212,6 +290,10 @@ function openChatUI() {
             if (chatInput.value.trim()) {
                 handleUserMessage(chatInput.value);
                 chatInput.value = '';
+            } else {
+                // Shake animation for empty input
+                chatInput.classList.add('input-error');
+                setTimeout(() => chatInput.classList.remove('input-error'), 500);
             }
         };
 

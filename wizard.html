@@ -7,6 +7,8 @@
     <title>Tax Filing Wizard - NeuralTax AI</title>
     <link rel="stylesheet" href="style.css?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         .wizard-container {
             max-width: 800px;
@@ -117,6 +119,18 @@
             box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
         }
 
+        .form-input.error {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
         .wizard-actions {
             display: flex;
             justify-content: space-between;
@@ -201,642 +215,428 @@
             </div>
             <div class="step" id="step4-indicator">
                 <div class="step-circle">4</div>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-                <style>
-                    .wizard-container {
-                        max-width: 800px;
-                        margin: 4rem auto;
-                        padding: 0 2rem;
-                    }
+                <div class="step-label">Review</div>
+            </div>
+        </div>
 
-                    .step-indicator {
-                        display: flex;
-                        justify-content: space-between;
-                        margin-bottom: 3rem;
-                        position: relative;
-                    }
+        <form id="taxWizardForm" class="wizard-card">
+            <!-- Step 1: Personal Info -->
+            <div class="wizard-step-content active" id="step1">
+                <h2 style="margin-bottom: 0.5rem;">Let's start with the basics</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">We need some personal information to
+                    identify your return.</p>
 
-                    .step-indicator::before {
-                        content: '';
-                        position: absolute;
-                        top: 50%;
-                        left: 0;
-                        width: 100%;
-                        height: 2px;
-                        background: rgba(0, 0, 0, 0.1);
-                        z-index: 0;
-                        transform: translateY(-50%);
-                    }
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" id="fullName" name="fullName" placeholder="e.g. Jane Doe"
+                        required>
+                    <div class="error-msg" id="error-fullName">Please enter your full name.</div>
+                </div>
 
-                    .step {
-                        position: relative;
-                        z-index: 1;
-                        background: var(--bg-light-green);
-                        padding: 0 1rem;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 0.5rem;
-                    }
-
-                    .step-circle {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        background: white;
-                        border: 2px solid #ddd;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        font-weight: 600;
-                        color: var(--text-secondary);
-                        transition: all 0.3s ease;
-                    }
-
-                    .step.active .step-circle {
-                        border-color: var(--accent-green-bright);
-                        background: var(--accent-green-bright);
-                        color: var(--bg-dark-deep);
-                        box-shadow: 0 0 15px rgba(74, 222, 128, 0.4);
-                    }
-
-                    .step.completed .step-circle {
-                        background: var(--bg-dark-deep);
-                        border-color: var(--bg-dark-deep);
-                        color: var(--accent-green-bright);
-                    }
-
-                    .step-label {
-                        font-size: 0.85rem;
-                        color: var(--text-secondary);
-                        font-weight: 500;
-                    }
-
-                    .step.active .step-label {
-                        color: var(--bg-dark-deep);
-                        font-weight: 700;
-                    }
-
-                    .wizard-card {
-                        background: white;
-                        border-radius: var(--border-radius);
-                        padding: 3rem;
-                        box-shadow: var(--shadow-premium);
-                        border: 1px solid rgba(0, 0, 0, 0.05);
-                    }
-
-                    .form-group {
-                        margin-bottom: 1.5rem;
-                    }
-
-                    .form-label {
-                        display: block;
-                        margin-bottom: 0.5rem;
-                        font-weight: 500;
-                        color: var(--text-dark);
-                    }
-
-                    .form-input {
-                        width: 100%;
-                        padding: 0.75rem 1rem;
-                        border: 1px solid #ddd;
-                        border-radius: 8px;
-                        font-family: var(--font-family);
-                        font-size: 1rem;
-                        transition: all 0.2s;
-                    }
-
-                    .form-input:focus {
-                        outline: none;
-                        border-color: var(--accent-green-bright);
-                        box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
-                    }
-
-                    .wizard-actions {
-                        display: flex;
-                        justify-content: space-between;
-                        margin-top: 3rem;
-                    }
-
-                    .option-grid {
-                        display: grid;
-                        grid-template-columns: repeat(2, 1fr);
-                        gap: 1rem;
-                    }
-
-                    .option-card {
-                        border: 2px solid #eee;
-                        border-radius: 12px;
-                        padding: 1.5rem;
-                        cursor: pointer;
-                        transition: all 0.2s;
-                        text-align: center;
-                    }
-
-                    .option-card:hover {
-                        border-color: var(--accent-mint);
-                        background: rgba(157, 211, 175, 0.05);
-                    }
-
-                    .option-card.selected {
-                        border-color: var(--accent-green-bright);
-                        background: rgba(74, 222, 128, 0.05);
-                        box-shadow: 0 4px 12px rgba(74, 222, 128, 0.15);
-                    }
-
-                    /* Hidden steps */
-                    .wizard-step-content {
-                        display: none;
-                        animation: fadeIn 0.4s ease;
-                    }
-
-                    .wizard-step-content.active {
-                        display: block;
-                    }
-
-                    @keyframes fadeIn {
-                        from {
-                            opacity: 0;
-                            transform: translateY(10px);
-                        }
-
-                        to {
-                            opacity: 1;
-                            transform: translateY(0);
-                        }
-                    }
-                </style>
-                </head>
-
-                <body>
-                    <header>
-                        <div class="container">
-                            <div class="logo">
-                                <img src="neuraltax_logo.png" alt="NeuralTax AI" style="height: 30px;">
-                            </div>
-                            <div style="font-weight: 600; color: var(--text-secondary);">2026 Tax Return</div>
-                            <a href="dashboard.html"
-                                style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Save &
-                                Exit</a>
-                        </div>
-                    </header>
-
-                    <div class="wizard-container">
-                        <div class="step-indicator">
-                            <div class="step active" id="step1-indicator">
-                                <div class="step-circle">1</div>
-                                <div class="step-label">Personal Info</div>
-                            </div>
-                            <div class="step" id="step2-indicator">
-                                <div class="step-circle">2</div>
-                                <div class="step-label">Income</div>
-                            </div>
-                            <div class="step" id="step3-indicator">
-                                <div class="step-circle">3</div>
-                                <div class="step-label">Deductions</div>
-                            </div>
-                            <div class="step" id="step4-indicator">
-                                <div class="step-circle">4</div>
-                                <div class="step-label">Review</div>
-                            </div>
-                        </div>
-
-                        <form id="taxWizardForm" class="wizard-card">
-                            <!-- Step 1: Personal Info -->
-                            <div class="wizard-step-content active" id="step1">
-                                <h2 style="margin-bottom: 0.5rem;">Let's start with the basics</h2>
-                                <p style="color: var(--text-secondary); margin-bottom: 2rem;">We need some personal
-                                    information to
-                                    identify your return.</p>
-
-                                <div class="form-group">
-                                    <label class="form-label">Full Name</label>
-                                    <input type="text" class="form-input" id="fullName" name="fullName"
-                                        placeholder="e.g. Jane Doe" required>
-                                </div>
-
-                                <div class="option-grid" style="margin-bottom: 1.5rem;">
-                                    <div class="option-card selected" data-group="filingStatus" data-value="Single"
-                                        onclick="selectOption(this, 'filingStatus')">
-                                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">👤</div>
-                                        <div style="font-weight: 600;">Single</div>
-                                    </div>
-                                    <div class="option-card" data-group="filingStatus"
-                                        data-value="Married Filing Jointly"
-                                        onclick="selectOption(this, 'filingStatus')">
-                                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">👥</div>
-                                        <div style="font-weight: 600;">Married Filing Jointly</div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="form-label">Date of Birth</label>
-                                    <input type="date" class="form-input" id="dob" name="dob">
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="form-label">Occupation</label>
-                                    <input type="text" class="form-input" id="occupation" name="occupation"
-                                        placeholder="e.g. Software Engineer">
-                                </div>
-                            </div>
-
-                            <!-- Step 2: Income -->
-                            <div class="wizard-step-content" id="step2">
-                                <h2 style="margin-bottom: 0.5rem;">Income Sources</h2>
-                                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Select all that apply to
-                                    you for the 2026
-                                    tax year.</p>
-
-                                <div class="option-grid" style="grid-template-columns: 1fr;">
-                                    <div class="option-card" data-group="income" data-value="W-2"
-                                        style="display: flex; align-items: center; gap: 1rem; text-align: left;"
-                                        onclick="toggleOption(this)">
-                                        <div style="font-size: 1.5rem;">📄</div>
-                                        <div>
-                                            <div style="font-weight: 600;">W-2</div>
-                                            <div style="font-size: 0.85rem; color: var(--text-secondary);">Job with a
-                                                regular paycheck
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="option-card" data-group="income" data-value="1099-NEC"
-                                        style="display: flex; align-items: center; gap: 1rem; text-align: left;"
-                                        onclick="toggleOption(this)">
-                                        <div style="font-size: 1.5rem;">💼</div>
-                                        <div>
-                                            <div style="font-weight: 600;">1099-NEC</div>
-                                            <div style="font-size: 0.85rem; color: var(--text-secondary);">Freelance or
-                                                contract work
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="option-card" data-group="income" data-value="Crypto"
-                                        style="display: flex; align-items: center; gap: 1rem; text-align: left;"
-                                        onclick="toggleOption(this)">
-                                        <div style="font-size: 1.5rem;">🪙</div>
-                                        <div>
-                                            <div style="font-weight: 600;">Crypto / Investments</div>
-                                            <div style="font-size: 0.85rem; color: var(--text-secondary);">Sold stock,
-                                                crypto, or other
-                                                assets</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div
-                                    style="margin-top: 2rem; padding: 1rem; background: rgba(157, 211, 175, 0.1); border-radius: 8px; border: 1px dashed var(--accent-mint);">
-                                    <div
-                                        style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
-                                        <span style="font-size: 1.2rem;">💡</span>
-                                        <span style="font-weight: 600; color: var(--bg-dark-deep);">AI Tip</span>
-                                    </div>
-                                    <p style="font-size: 0.9rem; color: var(--secondary-sage);">You can upload these
-                                        documents directly
-                                        in the next step, and I'll extract the data for you.</p>
-                                </div>
-                            </div>
-
-                            <!-- Step 3: Deductions -->
-                            <div class="wizard-step-content" id="step3">
-                                <h2 style="margin-bottom: 0.5rem;">Maximize Your Refund</h2>
-                                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Did you have any of these
-                                    expenses?</p>
-
-                                <div class="option-grid">
-                                    <div class="option-card" data-group="deductions" data-value="Student Loan Interest"
-                                        onclick="toggleOption(this)">
-                                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎓</div>
-                                        <div style="font-weight: 600;">Student Loan Interest</div>
-                                    </div>
-                                    <div class="option-card" data-group="deductions" data-value="Mortgage Interest"
-                                        onclick="toggleOption(this)">
-                                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏠</div>
-                                        <div style="font-weight: 600;">Mortgage Interest</div>
-                                    </div>
-                                    <div class="option-card" data-group="deductions" data-value="Medical Expenses"
-                                        onclick="toggleOption(this)">
-                                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏥</div>
-                                        <div style="font-weight: 600;">Medical Expenses</div>
-                                    </div>
-                                    <div class="option-card" data-group="deductions" data-value="Charitable Donations"
-                                        onclick="toggleOption(this)">
-                                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🤲</div>
-                                        <div style="font-weight: 600;">Charitable Donations</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Step 4: Review -->
-                            <div class="wizard-step-content" id="step4">
-                                <h2 style="margin-bottom: 0.5rem;">Review & File</h2>
-                                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Here's a summary of your
-                                    return based on
-                                    the data provided.</p>
-
-                                <div
-                                    style="background: var(--bg-dark-deep); color: white; padding: 2rem; border-radius: 12px; text-align: center; margin-bottom: 2rem;">
-                                    <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 0.5rem;">Estimated
-                                        Federal Refund</div>
-                                    <div style="font-size: 3rem; font-weight: 700; color: var(--accent-green-bright);"
-                                        id="summaryRefund">$0</div>
-                                </div>
-
-                                <div style="border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
-                                    <div
-                                        style="padding: 1rem; background: #f9fafb; border-bottom: 1px solid #eee; font-weight: 600;">
-                                        Summary</div>
-                                    <div style="padding: 1rem;">
-                                        <div
-                                            style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                            <span style="color: var(--text-secondary);">Total Income</span>
-                                            <span style="font-weight: 600;" id="summaryTotalIncome">$0</span>
-                                        </div>
-                                        <div
-                                            style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                            <span style="color: var(--text-secondary);">Total Deductions</span>
-                                            <span style="font-weight: 600;" id="summaryTotalDeductions">$0</span>
-                                        </div>
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <span style="color: var(--text-secondary);">Taxable Income</span>
-                                            <span style="font-weight: 600;" id="summaryTaxableIncome">$0</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="wizard-actions">
-                                <button type="button" class="btn" style="background: #eee; color: var(--text-dark);"
-                                    id="prevBtn" onclick="prevStep()" disabled>Back</button>
-                                <button type="button" class="btn btn-primary" id="nextBtn"
-                                    onclick="nextStep()">Continue</button>
-                            </div>
-                        </form>
+                <div class="option-grid" style="margin-bottom: 1.5rem;">
+                    <div class="option-card selected" data-group="filingStatus" data-value="Single"
+                        onclick="selectOption(this, 'filingStatus')">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">👤</div>
+                        <div style="font-weight: 600;">Single</div>
                     </div>
+                    <div class="option-card" data-group="filingStatus" data-value="Married Filing Jointly"
+                        onclick="selectOption(this, 'filingStatus')">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">👥</div>
+                        <div style="font-weight: 600;">Married Filing Jointly</div>
+                    </div>
+                </div>
 
-                    <footer class="neuraltax-footer">
-                        <div class="container">
-                            <div class="footer-top">
-                                <!-- Left Column -->
-                                <div class="footer-col footer-brand">
-                                    <div class="logo">
-                                        <img src="neuraltax_logo.png" alt="NeuralTax AI" style="height: 40px;">
-                                    </div>
-                                    <h3>Neuraltax AI Expert</h3>
-                                    <p>Your automated tax expert. Simplifying tax management with cutting-edge AI
-                                        technology and
-                                        precision.</p>
-                                    <div class="business-reg-box">
-                                        <i class="fas fa-file-alt"></i>
-                                        <div>
-                                            <span>Business Registration</span>
-                                            <strong>L25000152874</strong>
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="form-group">
+                    <label class="form-label">Date of Birth</label>
+                    <input type="date" class="form-input" id="dob" name="dob">
+                    <div class="error-msg" id="error-dob">Please select your date of birth.</div>
+                </div>
 
-                                <!-- Middle Column -->
-                                <div class="footer-col footer-contact">
-                                    <h4>Contact Information</h4>
-                                    <div class="email-box">
-                                        <i class="fas fa-envelope"></i>
-                                        <div>
-                                            <span>Email us</span>
-                                            <a href="mailto:neuraltaxai@gmail.com">neuraltaxai@gmail.com</a>
-                                        </div>
-                                    </div>
-                                    <div class="contact-details">
-                                        <div class="detail-item">
-                                            <i class="far fa-clock"></i>
-                                            <div>
-                                                <strong>Business Hours</strong>
-                                                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                                                <p>Saturday - Sunday: Closed</p>
-                                            </div>
-                                        </div>
-                                        <div class="detail-item">
-                                            <i class="fas fa-bolt"></i>
-                                            <div>
-                                                <strong>Response Time</strong>
-                                                <p>Within 24 hours</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="form-group">
+                    <label class="form-label">Occupation</label>
+                    <input type="text" class="form-input" id="occupation" name="occupation"
+                        placeholder="e.g. Software Engineer">
+                </div>
+            </div>
 
-                                <!-- Right Column -->
-                                <div class="footer-col footer-connect">
-                                    <div class="connect-header">
-                                        <h4>Connect With Us</h4>
-                                        <div class="social-icons">
-                                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                            <a href="#"><i class="fab fa-instagram"></i></a>
-                                            <a href="#"><i class="fab fa-youtube"></i></a>
-                                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                            <a href="#"><i class="fab fa-x-twitter"></i></a>
-                                            <a href="#"><i class="fab fa-whatsapp"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="footer-links">
-                                        <a href="#">Our Services</a>
-                                        <a href="#">Pricing</a>
-                                        <a href="#">About Us</a>
-                                        <a href="#">FAQ</a>
-                                        <a href="#">Quick Links</a>
-                                    </div>
-                                    <div class="footer-copyright">
-                                        <p>&copy; 2025 Neuraltax. All rights reserved.</p>
-                                        <div class="legal-links">
-                                            <a href="#">Privacy Policy</a>
-                                            <a href="#">Terms of Service</a>
-                                            <a href="#">Support</a>
-                                        </div>
-                                    </div>
-                                </div>
+            <!-- Step 2: Income -->
+            <div class="wizard-step-content" id="step2">
+                <h2 style="margin-bottom: 0.5rem;">Income Sources</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Select all that apply to you for the 2026
+                    tax year.</p>
+
+                <div class="option-grid" style="grid-template-columns: 1fr;">
+                    <div class="option-card" data-group="income" data-value="W-2"
+                        style="display: flex; align-items: center; gap: 1rem; text-align: left;"
+                        onclick="toggleOption(this)">
+                        <div style="font-size: 1.5rem;">📄</div>
+                        <div>
+                            <div style="font-weight: 600;">W-2</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary);">Job with a regular paycheck
                             </div>
-
-                            <div class="footer-bottom">
-                                <p class="reg-info">Business Registration Number: L25000152874 | Contact:
-                                    neuraltaxai@gmail.com</p>
-                                <p class="disclaimer">Neuraltax is not meant for collecting PII or securing sensitive
-                                    data. Please
-                                    consult
-                                    with a qualified tax professional for complex tax situations.</p>
-                                <p class="license">Licensed and registered for tax advisory services. All communications
-                                    are
-                                    confidential
-                                    and secure.</p>
-                            </div>
-                        </div>
-                    </footer>
-
-                    <!-- Chat Widget Trigger -->
-                    <div class="chat-widget">
-                        <div class="chat-trigger" id="chatTrigger">
-                            <img src="nerea_avatar.png?v=4" alt="Nerea">
                         </div>
                     </div>
+                    <div class="option-card" data-group="income" data-value="1099-NEC"
+                        style="display: flex; align-items: center; gap: 1rem; text-align: left;"
+                        onclick="toggleOption(this)">
+                        <div style="font-size: 1.5rem;">💼</div>
+                        <div>
+                            <div style="font-weight: 600;">1099-NEC</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary);">Freelance or contract work
+                            </div>
+                        </div>
+                    </div>
+                    <div class="option-card" data-group="income" data-value="Crypto"
+                        style="display: flex; align-items: center; gap: 1rem; text-align: left;"
+                        onclick="toggleOption(this)">
+                        <div style="font-size: 1.5rem;">🪙</div>
+                        <div>
+                            <div style="font-weight: 600;">Crypto / Investments</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary);">Sold stock, crypto, or other
+                                assets</div>
+                        </div>
+                    </div>
+                </div>
 
-                    <script src="main.js"></script>
-                    <script>
-                        let currentStep = 1;
-                        const totalSteps = 4;
+                <div
+                    style="margin-top: 2rem; padding: 1rem; background: rgba(157, 211, 175, 0.1); border-radius: 8px; border: 1px dashed var(--accent-mint);">
+                    <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
+                        <span style="font-size: 1.2rem;">💡</span>
+                        <span style="font-weight: 600; color: var(--bg-dark-deep);">AI Tip</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--secondary-sage);">You can upload these documents directly
+                        in the next step, and I'll extract the data for you.</p>
+                </div>
+            </div>
 
-                        // State object to store wizard data
-                        const wizardData = {
-                            personalInfo: {
-                                fullName: '',
-                                filingStatus: 'Single',
-                                dob: '',
-                                occupation: ''
-                            },
-                            income: [],
-                            deductions: []
-                        };
+            <!-- Step 3: Deductions -->
+            <div class="wizard-step-content" id="step3">
+                <h2 style="margin-bottom: 0.5rem;">Maximize Your Refund</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Did you have any of these expenses?</p>
 
-                        function showStep(step) {
-                            // Hide all steps
-                            document.querySelectorAll('.wizard-step-content').forEach(el => el.classList.remove('active'));
-                            // Show current step
-                            document.getElementById(`step${step}`).classList.add('active');
+                <div class="option-grid">
+                    <div class="option-card" data-group="deductions" data-value="Student Loan Interest"
+                        onclick="toggleOption(this)">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎓</div>
+                        <div style="font-weight: 600;">Student Loan Interest</div>
+                    </div>
+                    <div class="option-card" data-group="deductions" data-value="Mortgage Interest"
+                        onclick="toggleOption(this)">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏠</div>
+                        <div style="font-weight: 600;">Mortgage Interest</div>
+                    </div>
+                    <div class="option-card" data-group="deductions" data-value="Medical Expenses"
+                        onclick="toggleOption(this)">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏥</div>
+                        <div style="font-weight: 600;">Medical Expenses</div>
+                    </div>
+                    <div class="option-card" data-group="deductions" data-value="Charitable Donations"
+                        onclick="toggleOption(this)">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🤲</div>
+                        <div style="font-weight: 600;">Charitable Donations</div>
+                    </div>
+                </div>
+            </div>
 
-                            // Update indicators
-                            for (let i = 1; i <= totalSteps; i++) {
-                                const indicator = document.getElementById(`step${i}-indicator`);
-                                if (i < step) {
-                                    indicator.classList.add('completed');
-                                    indicator.classList.remove('active');
-                                    indicator.querySelector('.step-circle').innerHTML = '✓';
-                                } else if (i === step) {
-                                    indicator.classList.add('active');
-                                    indicator.classList.remove('completed');
-                                    indicator.querySelector('.step-circle').innerHTML = i;
-                                } else {
-                                    indicator.classList.remove('active', 'completed');
-                                    indicator.querySelector('.step-circle').innerHTML = i;
-                                }
-                            }
+            <!-- Step 4: Review -->
+            <div class="wizard-step-content" id="step4">
+                <h2 style="margin-bottom: 0.5rem;">Review & File</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Here's a summary of your return based on
+                    the data provided.</p>
 
-                            // Update buttons
-                            document.getElementById('prevBtn').disabled = step === 1;
-                            document.getElementById('nextBtn').textContent = step === totalSteps ? 'File Return' : 'Continue';
+                <div
+                    style="background: var(--bg-dark-deep); color: white; padding: 2rem; border-radius: 12px; text-align: center; margin-bottom: 2rem;">
+                    <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 0.5rem;">Estimated Federal Refund</div>
+                    <div style="font-size: 3rem; font-weight: 700; color: var(--accent-green-bright);"
+                        id="summaryRefund">$2,450</div>
+                </div>
 
-                            // If on review step, update summary
-                            if (step === 4) {
-                                updateSummary();
-                            }
-                        }
+                <div style="border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
+                    <div style="padding: 1rem; background: #f9fafb; border-bottom: 1px solid #eee; font-weight: 600;">
+                        Summary</div>
+                    <div style="padding: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: var(--text-secondary);">Name</span>
+                            <span style="font-weight: 600;" id="summaryName">-</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: var(--text-secondary);">Filing Status</span>
+                            <span style="font-weight: 600;" id="summaryStatus">Single</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: var(--text-secondary);">Income Sources</span>
+                            <span style="font-weight: 600;" id="summaryIncome">None</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--text-secondary);">Deductions</span>
+                            <span style="font-weight: 600;" id="summaryDeductions">None</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                        function validateStep(step) {
-                            if (step === 1) {
-                                const fullName = document.getElementById('fullName').value;
-                                if (!fullName.trim()) {
-                                    alert('Please enter your full name.');
-                                    return false;
-                                }
-                                // Save data
-                                wizardData.personalInfo.fullName = fullName;
-                                wizardData.personalInfo.dob = document.getElementById('dob').value;
-                                wizardData.personalInfo.occupation = document.getElementById('occupation').value;
-                                // Filing status is already updated via selectOption
-                            }
-                            // Steps 2 and 3 are optional selections, so no strict validation needed
-                            // But we should save the state (which is done via toggleOption)
+            <div class="wizard-actions">
+                <button type="button" class="btn" style="background: #eee; color: var(--text-dark);" id="prevBtn"
+                    onclick="prevStep()" disabled>Back</button>
+                <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">Continue</button>
+            </div>
+        </form>
+    </div>
 
-                            return true;
-                        }
+    <footer class="neuraltax-footer">
+        <div class="container">
+            <div class="footer-top">
+                <!-- Left Column -->
+                <div class="footer-col footer-brand">
+                    <div class="logo">
+                        <img src="neuraltax_logo.png" alt="NeuralTax AI" style="height: 40px;">
+                    </div>
+                    <h3>Neuraltax AI Expert</h3>
+                    <p>Your automated tax expert. Simplifying tax management with cutting-edge AI technology and
+                        precision.</p>
+                </div>
 
-                        function nextStep() {
-                            if (validateStep(currentStep)) {
-                                if (currentStep < totalSteps) {
-                                    currentStep++;
-                                    showStep(currentStep);
-                                } else {
-                                    submitTaxReturn();
-                                }
-                            }
-                        }
+                <!-- Middle Column -->
+                <div class="footer-col footer-contact">
+                    <h4>Contact Information</h4>
+                    <div class="email-box">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <span>Email us</span>
+                            <a href="mailto:neuraltaxai@gmail.com">neuraltaxai@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
 
-                        function prevStep() {
-                            if (currentStep > 1) {
-                                currentStep--;
-                                showStep(currentStep);
-                            }
-                        }
+                <!-- Right Column -->
+                <div class="footer-col footer-connect">
+                    <div class="connect-header">
+                        <h4>Connect With Us</h4>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-x-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                        function selectOption(element, group) {
-                            // Deselect all in group
-                            element.parentElement.querySelectorAll('.option-card').forEach(el => el.classList.remove('selected'));
-                            element.classList.add('selected');
+            <div class="footer-bottom">
+                <p class="reg-info">Business Registration Number: L25000152874 | Contact: neuraltaxai@gmail.com</p>
+                <p class="disclaimer">Neuraltax is not meant for collecting PII or securing sensitive data. Please
+                    consult with a qualified tax professional for complex tax situations.</p>
+                <p class="license">Licensed and registered for tax advisory services. All communications are
+                    confidential
+                    and secure.</p>
+            </div>
+        </div>
+    </footer>
 
-                            // Save to state
-                            if (group === 'filingStatus') {
-                                wizardData.personalInfo.filingStatus = element.getAttribute('data-value');
-                            }
-                        }
+    <!-- Chat Widget Trigger -->
+    <div class="chat-widget">
+        <div class="chat-trigger" id="chatTrigger">
+            <img src="nerea_avatar.png?v=4" alt="Nerea">
+        </div>
+    </div>
 
-                        function toggleOption(element) {
-                            element.classList.toggle('selected');
+    <script src="main.js"></script>
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
 
-                            const group = element.getAttribute('data-group');
-                            const value = element.getAttribute('data-value');
+        // State object to store wizard data
+        const wizardData = {
+            personalInfo: {
+                fullName: '',
+                filingStatus: 'Single',
+                dob: '',
+                occupation: ''
+            },
+            income: [],
+            deductions: []
+        };
 
-                            if (group === 'income') {
-                                if (element.classList.contains('selected')) {
-                                    if (!wizardData.income.includes(value)) wizardData.income.push(value);
-                                } else {
-                                    wizardData.income = wizardData.income.filter(item => item !== value);
-                                }
-                            } else if (group === 'deductions') {
-                                if (element.classList.contains('selected')) {
-                                    if (!wizardData.deductions.includes(value)) wizardData.deductions.push(value);
-                                } else {
-                                    wizardData.deductions = wizardData.deductions.filter(item => item !== value);
-                                }
-                            }
-                        }
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.wizard-step-content').forEach(el => el.classList.remove('active'));
+            // Show current step
+            document.getElementById(`step${step}`).classList.add('active');
 
-                        function updateSummary() {
-                            // Mock calculations for demo purposes
-                            let baseIncome = 0;
-                            if (wizardData.income.includes('W-2')) baseIncome += 65000;
-                            if (wizardData.income.includes('1099-NEC')) baseIncome += 15000;
-                            if (wizardData.income.includes('Crypto')) baseIncome += 5000;
+            // Update indicators
+            for (let i = 1; i <= totalSteps; i++) {
+                const indicator = document.getElementById(`step${i}-indicator`);
+                if (i < step) {
+                    indicator.classList.add('completed');
+                    indicator.classList.remove('active');
+                    indicator.querySelector('.step-circle').innerHTML = '✓';
+                } else if (i === step) {
+                    indicator.classList.add('active');
+                    indicator.classList.remove('completed');
+                    indicator.querySelector('.step-circle').innerHTML = i;
+                } else {
+                    indicator.classList.remove('active', 'completed');
+                    indicator.querySelector('.step-circle').innerHTML = i;
+                }
+            }
 
-                            let totalDeductions = 14600; // Standard deduction 2026 estimate
-                            if (wizardData.personalInfo.filingStatus === 'Married Filing Jointly') totalDeductions = 29200;
+            // Update buttons
+            document.getElementById('prevBtn').disabled = step === 1;
+            document.getElementById('nextBtn').textContent = step === totalSteps ? 'File Return' : 'Continue';
 
-                            if (wizardData.deductions.includes('Student Loan Interest')) totalDeductions += 2500;
-                            if (wizardData.deductions.includes('Mortgage Interest')) totalDeductions += 8000;
-                            if (wizardData.deductions.includes('Medical Expenses')) totalDeductions += 3000;
-                            if (wizardData.deductions.includes('Charitable Donations')) totalDeductions += 1000;
+            // If on review step, update summary
+            if (step === 4) {
+                updateSummary();
+            }
+        }
 
-                            const taxableIncome = Math.max(0, baseIncome - totalDeductions);
-                            const estimatedTax = taxableIncome * 0.15; // Simplified flat rate
-                            const withheld = baseIncome * 0.18; // Assume some withholding
-                            const refund = Math.max(0, withheld - estimatedTax);
+        function validateStep(step) {
+            let isValid = true;
 
-                            // Update DOM
-                            document.getElementById('summaryTotalIncome').textContent = '$' + baseIncome.toLocaleString();
-                            document.getElementById('summaryTotalDeductions').textContent = '$' + totalDeductions.toLocaleString();
-                            document.getElementById('summaryTaxableIncome').textContent = '$' + taxableIncome.toLocaleString();
-                            document.getElementById('summaryRefund').textContent = '$' + Math.floor(refund).toLocaleString();
-                        }
+            // Reset errors
+            document.querySelectorAll('.form-input').forEach(el => el.classList.remove('error'));
+            document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
 
-                        function submitTaxReturn() {
-                            console.log('Submitting tax return:', wizardData);
+            if (step === 1) {
+                const fullName = document.getElementById('fullName');
+                const dob = document.getElementById('dob');
 
-                            const btn = document.getElementById('nextBtn');
-                            const originalText = btn.textContent;
-                            btn.textContent = 'Processing...';
-                            btn.disabled = true;
+                if (!fullName.value.trim()) {
+                    fullName.classList.add('error');
+                    document.getElementById('error-fullName').style.display = 'block';
+                    isValid = false;
+                }
 
-                            setTimeout(() => {
-                                alert(`Success! Your tax return for ${wizardData.personalInfo.fullName} has been filed.\n\nEstimated Refund: ${document.getElementById('summaryRefund').textContent}`);
-                                window.location.href = 'dashboard.html';
-                            }, 1500);
-                        }
-                    </script>
-                </body>
+                if (!dob.value) {
+                    dob.classList.add('error');
+                    document.getElementById('error-dob').style.display = 'block';
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    wizardData.personalInfo.fullName = fullName.value;
+                    wizardData.personalInfo.dob = dob.value;
+                    wizardData.personalInfo.occupation = document.getElementById('occupation').value;
+                }
+            }
+
+            return isValid;
+        }
+
+        function nextStep() {
+            if (validateStep(currentStep)) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    showStep(currentStep);
+                } else {
+                    generatePDF();
+                }
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function selectOption(element, group) {
+            element.parentElement.querySelectorAll('.option-card').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+
+            if (group === 'filingStatus') {
+                wizardData.personalInfo.filingStatus = element.getAttribute('data-value');
+            }
+        }
+
+        function toggleOption(element) {
+            element.classList.toggle('selected');
+
+            const group = element.getAttribute('data-group');
+            const value = element.getAttribute('data-value');
+
+            if (group === 'income') {
+                if (element.classList.contains('selected')) {
+                    if (!wizardData.income.includes(value)) wizardData.income.push(value);
+                } else {
+                    wizardData.income = wizardData.income.filter(item => item !== value);
+                }
+            } else if (group === 'deductions') {
+                if (element.classList.contains('selected')) {
+                    if (!wizardData.deductions.includes(value)) wizardData.deductions.push(value);
+                } else {
+                    wizardData.deductions = wizardData.deductions.filter(item => item !== value);
+                }
+            }
+        }
+
+        function updateSummary() {
+            document.getElementById('summaryName').textContent = wizardData.personalInfo.fullName || '-';
+            document.getElementById('summaryStatus').textContent = wizardData.personalInfo.filingStatus;
+            document.getElementById('summaryIncome').textContent = wizardData.income.length > 0 ? wizardData.income.join(', ') : 'None';
+            document.getElementById('summaryDeductions').textContent = wizardData.deductions.length > 0 ? wizardData.deductions.join(', ') : 'None';
+        }
+
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Header
+            doc.setFontSize(22);
+            doc.setTextColor(22, 101, 52); // Dark Green
+            doc.text("NeuralTax AI - 2026 Tax Return Summary", 20, 20);
+
+            // Line
+            doc.setLineWidth(0.5);
+            doc.setDrawColor(200, 200, 200);
+            doc.line(20, 25, 190, 25);
+
+            // Personal Info
+            doc.setFontSize(16);
+            doc.setTextColor(0, 0, 0);
+            doc.text("Personal Information", 20, 40);
+
+            doc.setFontSize(12);
+            doc.text(`Full Name: ${wizardData.personalInfo.fullName}`, 20, 50);
+            doc.text(`Filing Status: ${wizardData.personalInfo.filingStatus}`, 20, 60);
+            doc.text(`Date of Birth: ${wizardData.personalInfo.dob}`, 20, 70);
+            doc.text(`Occupation: ${wizardData.personalInfo.occupation || 'N/A'}`, 20, 80);
+
+            // Income
+            doc.setFontSize(16);
+            doc.text("Income Sources", 20, 100);
+            doc.setFontSize(12);
+            const incomeText = wizardData.income.length > 0 ? wizardData.income.join(', ') : 'None selected';
+            doc.text(incomeText, 20, 110);
+
+            // Deductions
+            doc.setFontSize(16);
+            doc.text("Deductions", 20, 130);
+            doc.setFontSize(12);
+            const deductionsText = wizardData.deductions.length > 0 ? wizardData.deductions.join(', ') : 'None selected';
+            doc.text(deductionsText, 20, 140);
+
+            // Summary
+            doc.setFillColor(240, 253, 244); // Light Green
+            doc.rect(20, 160, 170, 40, 'F');
+            doc.setFontSize(14);
+            doc.setTextColor(22, 101, 52);
+            doc.text("Estimated Federal Refund", 30, 175);
+            doc.setFontSize(24);
+            doc.text("$2,450.00", 30, 190);
+
+            // Footer
+            doc.setFontSize(10);
+            doc.setTextColor(150, 150, 150);
+            doc.text("Generated by NeuralTax AI - For estimation purposes only.", 20, 280);
+
+            // Save
+            doc.save("NeuralTax_Return_2026.pdf");
+
+            alert("Return filed successfully! Your PDF summary has been downloaded.");
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
 
 </html>
